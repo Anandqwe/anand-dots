@@ -53,7 +53,7 @@ playerctl
 pamixer
 
 # File manager
-thunar
+nautilus
 
 # Browser
 firefox
