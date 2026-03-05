@@ -1,0 +1,13 @@
+# ── Wofi Configuration ──────────────────────────
+mode=drun
+allow_images=true
+image_size=32
+width=500
+height=400
+prompt=Search...
+lines=10
+columns=1
+insensitive=true
+hide_scroll=true
+no_actions=true
+allow_markup=true

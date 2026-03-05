@@ -1,0 +1,115 @@
+// ╔══════════════════════════════════════════════╗
+// ║         anand-dots — Waybar Config           ║
+// ╚══════════════════════════════════════════════╝
+{
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "spacing": 0,
+
+    // ── Module Layout ──────────────────────────
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory",
+        "battery",
+        "tray",
+        "custom/power"
+    ],
+
+    // ── Workspaces ─────────────────────────────
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": " ",
+            "2": " ",
+            "3": " ",
+            "4": " ",
+            "5": " ",
+            "default": " "
+        },
+        "persistent-workspaces": {
+            "*": 5
+        },
+        "on-click": "activate"
+    },
+
+    // ── Clock ──────────────────────────────────
+    "clock": {
+        "format": "  {:%a %b %d   %H:%M}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "format": {
+                "today": "<b><u>{}</u></b>"
+            }
+        }
+    },
+
+    // ── CPU ────────────────────────────────────
+    "cpu": {
+        "interval": 5,
+        "format": "  {usage}%",
+        "tooltip": true
+    },
+
+    // ── Memory ─────────────────────────────────
+    "memory": {
+        "interval": 5,
+        "format": "  {}%",
+        "tooltip-format": "{used:0.1f}G / {total:0.1f}G"
+    },
+
+    // ── Battery ────────────────────────────────
+    "battery": {
+        "interval": 30,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}  {capacity}%",
+        "format-charging": "  {capacity}%",
+        "format-plugged": "  {capacity}%",
+        "format-icons": [" ", " ", " ", " ", " "]
+    },
+
+    // ── Network ────────────────────────────────
+    "network": {
+        "interval": 5,
+        "format-wifi": "  {essid}",
+        "format-ethernet": "  {ifname}",
+        "format-disconnected": "  Offline",
+        "tooltip-format": "{ipaddr}/{cidr}"
+    },
+
+    // ── Volume ─────────────────────────────────
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "  Muted",
+        "format-icons": {
+            "default": [" ", " ", " "]
+        },
+        "on-click": "pamixer -t",
+        "on-scroll-up": "pamixer -i 5",
+        "on-scroll-down": "pamixer -d 5"
+    },
+
+    // ── System Tray ────────────────────────────
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    // ── Power Button ───────────────────────────
+    "custom/power": {
+        "format": " ",
+        "tooltip": false,
+        "on-click": "~/.config/hypr/scripts/powermenu.sh"
+    }
+}

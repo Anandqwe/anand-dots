@@ -1,0 +1,58 @@
+# ============================================
+# anand-dots — Package List
+# ============================================
+# Lines starting with # are comments.
+# Section markers: [pacman] and [aur]
+# ============================================
+
+[pacman]
+
+# Window manager
+hyprland
+
+# Status bar
+waybar
+
+# Terminal
+kitty
+
+# Application launcher
+wofi
+
+# Notification daemon
+mako
+
+# Screenshot tools
+grim
+slurp
+
+# Clipboard
+wl-clipboard
+cliphist
+
+# Wallpaper engine
+swww
+
+# Authentication agent
+polkit-kde-agent
+
+# XDG desktop portal
+xdg-desktop-portal-hyprland
+
+# Brightness control
+brightnessctl
+
+# Media control
+playerctl
+
+# Volume control
+pamixer
+
+# Utilities
+jq
+libnotify
+
+[aur]
+
+# Nerd Font
+ttf-jetbrains-mono-nerd
