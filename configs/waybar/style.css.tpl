@@ -1,16 +1,16 @@
 /* ╔══════════════════════════════════════════════╗ */
 /* ║         anand-dots — Waybar Style            ║ */
-/* ║         Theme: gruvbox-dark                */
+/* ║         Theme: {{theme_name}}                */
 /* ╚══════════════════════════════════════════════╝ */
 
 /* ── Color Reference ────────────────────────────── */
-/* base:     #282828   mantle:   #1d2021         */
-/* crust:    #1d2021  text:     #ebdbb2           */
-/* subtext0: #bdae93 surface0: #3c3836     */
-/* surface1: #504945 blue:   #83a598           */
-/* mauve:    #d3869b  green:    #b8bb26          */
-/* peach:    #fe8019  yellow:   #fabd2f         */
-/* red:      #fb4934    teal:     #8ec07c           */
+/* base:     {{base}}   mantle:   {{mantle}}         */
+/* crust:    {{crust}}  text:     {{text}}           */
+/* subtext0: {{subtext0}} surface0: {{surface0}}     */
+/* surface1: {{surface1}} blue:   {{blue}}           */
+/* mauve:    {{mauve}}  green:    {{green}}          */
+/* peach:    {{peach}}  yellow:   {{yellow}}         */
+/* red:      {{red}}    teal:     {{teal}}           */
 
 /* ── Global ─────────────────────────────────────── */
 * {
@@ -20,16 +20,16 @@
 }
 
 window#waybar {
-    background-color: #282828;
-    color: #ebdbb2;
+    background-color: {{base}};
+    color: {{text}};
 }
 
 /* ── Tooltip ────────────────────────────────────── */
 tooltip {
-    background-color: #1d2021;
-    border: 1px solid #504945;
+    background-color: {{mantle}};
+    border: 1px solid {{surface1}};
     border-radius: 8px;
-    color: #ebdbb2;
+    color: {{text}};
 }
 
 /* ── Module Containers ──────────────────────────── */
@@ -46,13 +46,13 @@ tooltip {
     padding: 0 12px;
     margin: 4px 2px;
     border-radius: 8px;
-    background-color: #3c3836;
+    background-color: {{surface0}};
     transition: all 0.2s ease;
 }
 
 /* ── Active Window Title ────────────────────────── */
 #window {
-    color: #ebdbb2;
+    color: {{text}};
     font-weight: bold;
 }
 
@@ -63,7 +63,7 @@ tooltip {
 
 #workspaces button {
     padding: 0 8px;
-    color: #bdae93;
+    color: {{subtext0}};
     border: none;
     border-radius: 6px;
     background: transparent;
@@ -71,73 +71,73 @@ tooltip {
 }
 
 #workspaces button:hover {
-    background-color: #504945;
-    color: #ebdbb2;
+    background-color: {{surface1}};
+    color: {{text}};
 }
 
 #workspaces button.active {
-    background-color: #83a598;
-    color: #1d2021;
+    background-color: {{blue}};
+    color: {{crust}};
     font-weight: bold;
 }
 
 #workspaces button.urgent {
-    background-color: #fb4934;
-    color: #1d2021;
+    background-color: {{red}};
+    color: {{crust}};
 }
 
 /* ── Clock ──────────────────────────────────────── */
 #clock {
-    color: #ebdbb2;
+    color: {{text}};
     font-weight: bold;
 }
 
 /* ── CPU ────────────────────────────────────────── */
 #cpu {
-    color: #b8bb26;
+    color: {{green}};
 }
 
 /* ── Memory ─────────────────────────────────────── */
 #memory {
-    color: #fe8019;
+    color: {{peach}};
 }
 
 /* ── Battery ────────────────────────────────────── */
 #battery {
-    color: #fabd2f;
+    color: {{yellow}};
 }
 
 #battery.warning {
-    color: #fe8019;
+    color: {{peach}};
 }
 
 #battery.critical {
-    color: #fb4934;
+    color: {{red}};
     animation: blink 1s linear infinite;
 }
 
 @keyframes blink {
     to {
-        color: #ebdbb2;
+        color: {{text}};
     }
 }
 
 /* ── Network ────────────────────────────────────── */
 #network {
-    color: #8ec07c;
+    color: {{teal}};
 }
 
 #network.disconnected {
-    color: #bdae93;
+    color: {{subtext0}};
 }
 
 /* ── Volume ─────────────────────────────────────── */
 #pulseaudio {
-    color: #d3869b;
+    color: {{mauve}};
 }
 
 #pulseaudio.muted {
-    color: #bdae93;
+    color: {{subtext0}};
 }
 
 /* ── System Tray ────────────────────────────────── */
@@ -155,11 +155,11 @@ tooltip {
 
 /* ── Power Button ───────────────────────────────── */
 #custom-power {
-    color: #fb4934;
+    color: {{red}};
     padding: 0 10px;
 }
 
 #custom-power:hover {
-    background-color: #fb4934;
-    color: #1d2021;
+    background-color: {{red}};
+    color: {{crust}};
 }

@@ -17,7 +17,7 @@
             "type": "custom"
         },
         {
-            "key": "│  user              │",
+            "key": "│  user               │",
             "type": "title",
             "format": "{user-name}@{host-name}"
         },
@@ -30,24 +30,24 @@
             "type": "uptime"
         },
         {
-            "key": "│  distro            │",
+            "key": "│  distro             │",
             "type": "os",
             "format": "{name} {arch}"
         },
         {
-            "key": "│  kernel            │",
+            "key": "│  kernel             │",
             "type": "kernel"
         },
         {
-            "key": "│  wm                │",
+            "key": "│  wm                 │",
             "type": "wm"
         },
         {
-            "key": "│  shell             │",
+            "key": "│  shell              │",
             "type": "shell"
         },
         {
-            "key": "│  terminal          │",
+            "key": "│  terminal           │",
             "type": "terminal"
         },
         {
@@ -60,7 +60,7 @@
             "format": "{name}"
         },
         {
-            "key": "│  memory            │",
+            "key": "│  memory             │",
             "type": "memory"
         },
         {
@@ -73,7 +73,7 @@
             "type": "custom"
         },
         {
-            "key": "│ colors             │",
+            "key": "│ colors              │",
             "type": "colors",
             "symbol": "circle"
         },

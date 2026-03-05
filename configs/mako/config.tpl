@@ -1,15 +1,15 @@
 # ╔══════════════════════════════════════════════╗
 # ║         anand-dots — Mako Config              ║
-# ║         Theme: gruvbox-dark                 ║
+# ║         Theme: {{theme_name}}                 ║
 # ╚══════════════════════════════════════════════╝
 
 # ── Font ────────────────────────────────────────
 font=JetBrainsMono Nerd Font 11
 
 # ── Colors ──────────────────────────────────────
-background-color=#282828ee
-text-color=#ebdbb2
-border-color=#83a598
+background-color={{base}}ee
+text-color={{text}}
+border-color={{blue}}
 
 # ── Layout ──────────────────────────────────────
 width=350
@@ -31,13 +31,13 @@ max-icon-size=48
 
 # ── Urgency: Low ───────────────────────────────
 [urgency=low]
-border-color=#3c3836
+border-color={{surface0}}
 
 # ── Urgency: Normal ────────────────────────────
 [urgency=normal]
-border-color=#83a598
+border-color={{blue}}
 
 # ── Urgency: Critical ──────────────────────────
 [urgency=critical]
-border-color=#fb4934
+border-color={{red}}
 default-timeout=0

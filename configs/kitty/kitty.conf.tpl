@@ -1,6 +1,6 @@
 # ╔══════════════════════════════════════════════╗
 # ║         anand-dots — Kitty Config             ║
-# ║         Theme: gruvbox-dark                 ║
+# ║         Theme: {{theme_name}}                 ║
 # ╚══════════════════════════════════════════════╝
 
 # ── Shell ───────────────────────────────────────
@@ -36,52 +36,52 @@ tab_powerline_style slanted
 url_style curly
 detect_urls yes
 
-# ── Color Scheme: gruvbox-dark ─────────────────
+# ── Color Scheme: {{theme_name}} ─────────────────
 
 # Special
-foreground           #ebdbb2
-background           #282828
-selection_foreground  #282828
-selection_background  #d5c4a1
-cursor               #d5c4a1
-cursor_text_color    #282828
-url_color            #83a598
+foreground           {{text}}
+background           {{base}}
+selection_foreground  {{base}}
+selection_background  {{rosewater}}
+cursor               {{rosewater}}
+cursor_text_color    {{base}}
+url_color            {{blue}}
 
 # Black
-color0  #504945
-color8  #665c54
+color0  {{surface1}}
+color8  {{surface2}}
 
 # Red
-color1  #fb4934
-color9  #fb4934
+color1  {{red}}
+color9  {{red}}
 
 # Green
-color2  #b8bb26
-color10 #b8bb26
+color2  {{green}}
+color10 {{green}}
 
 # Yellow
-color3  #fabd2f
-color11 #fabd2f
+color3  {{yellow}}
+color11 {{yellow}}
 
 # Blue
-color4  #83a598
-color12 #83a598
+color4  {{blue}}
+color12 {{blue}}
 
 # Magenta
-color5  #d3869b
-color13 #d3869b
+color5  {{pink}}
+color13 {{pink}}
 
 # Cyan
-color6  #8ec07c
-color14 #8ec07c
+color6  {{teal}}
+color14 {{teal}}
 
 # White
-color7  #d5c4a1
-color15 #bdae93
+color7  {{subtext1}}
+color15 {{subtext0}}
 
 # Tab bar colors
-active_tab_foreground   #1d2021
-active_tab_background   #d3869b
-inactive_tab_foreground #ebdbb2
-inactive_tab_background #1d2021
-tab_bar_background      #1d2021
+active_tab_foreground   {{crust}}
+active_tab_background   {{mauve}}
+inactive_tab_foreground {{text}}
+inactive_tab_background {{mantle}}
+tab_bar_background      {{crust}}

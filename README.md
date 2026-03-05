@@ -107,6 +107,7 @@ The uninstall script removes symlinks and optionally restores backed-up configs.
 | Key | Action |
 |-----|--------|
 | `SUPER + SHIFT + W` | Open wallpaper picker |
+| `SUPER + SHIFT + T` | Switch theme (wofi picker) |
 | `SUPER + SHIFT + mouse scroll` | Zoom in/out |
 | `SUPER + SHIFT + Z` | Reset zoom |
 
@@ -120,7 +121,7 @@ The uninstall script removes symlinks and optionally restores backed-up configs.
 
 ## Theme Switching
 
-Five themes are included:
+Five high-quality themes are included, with **full theme switching** across all components:
 
 - **catppuccin-mocha** (default)
 - **gruvbox-dark**
@@ -128,14 +129,27 @@ Five themes are included:
 - **nord**
 - **dracula**
 
-To switch themes:
+### GUI Picker
+Press `SUPER + SHIFT + T` to open a wofi picker listing all available themes. Select one to apply it instantly.
+
+### Command Line
 ```bash
-# Replace <theme-name> with one of the above
-ln -sf ~/anand-dots/themes/<theme-name>.conf ~/.config/hypr/theme.conf
-hyprctl reload
+~/.config/hypr/scripts/theme.sh catppuccin-mocha
+~/.config/hypr/scripts/theme.sh dracula
+~/.config/hypr/scripts/theme.sh gruvbox-dark
+~/.config/hypr/scripts/theme.sh nord
+~/.config/hypr/scripts/theme.sh tokyo-night
 ```
 
-> Note: Theme switching currently applies to Hyprland borders only. Waybar, kitty, wofi, and mako use hardcoded Catppuccin Mocha colors. Full theme switching across all components is planned for a future update.
+### How It Works
+The theme switcher generates and applies colors to all components:
+- **Hyprland** — window borders and lock screen
+- **Waybar** — status bar
+- **Kitty** — terminal
+- **Wofi** — application launcher
+- **Mako** — notifications
+
+Each theme is defined once in `themes/`, and the theme switcher generates all app configs from templates automatically.
 
 ## Structure
 
@@ -182,14 +196,26 @@ anand-dots/
 │   ├── focus.sh               # Focus helper
 │   ├── gamemode.sh            # Toggle game mode
 │   ├── keybindings.sh         # Show keybindings cheatsheet
+│   ├── theme.sh               # Full theme switcher
 │   ├── toggle-animations.sh   # Toggle animations on/off
 │   └── toggle-waybar.sh       # Toggle Waybar visibility
 ├── themes/
-│   ├── catppuccin-mocha.conf
+│   ├── catppuccin-mocha.conf  # Theme color definitions
 │   ├── gruvbox-dark.conf
 │   ├── tokyo-night.conf
 │   ├── nord.conf
 │   └── dracula.conf
+├── configs/hypr/
+│   ├── hyprlock.conf.tpl      # Hyprlock template
+│   └── theme.conf             # Active theme symlink
+├── configs/waybar/
+│   └── style.css.tpl          # Waybar CSS template
+├── configs/kitty/
+│   └── kitty.conf.tpl         # Kitty config template
+├── configs/wofi/
+│   └── style.css.tpl          # Wofi CSS template
+├── configs/mako/
+│   └── config.tpl             # Mako config template
 └── assets/
     ├── wallpapers/
     └── screenshots/
@@ -204,7 +230,8 @@ anand-dots/
 - **Lock screen**: Edit `configs/hypr/hyprlock.conf`
 - **Idle/suspend policy**: Edit `configs/hypr/hypridle.conf`
 - **Waybar modules**: Edit `configs/waybar/config.jsonc`
-- **Waybar style**: Edit `configs/waybar/style.css`
+- **Waybar style**: Edit `configs/waybar/style.css.tpl` (template) or `configs/waybar/style.css` (generated)
+- **Kitty terminal**: Edit `configs/kitty/kitty.conf.tpl` (template) or `configs/kitty/kitty.conf` (generated)
 - **Shell prompt**: Edit `configs/ohmyposh/zen.toml`
 - **System info**: Edit `configs/fastfetch/config.jsonc`
 - **Zsh config**: Edit `configs/zsh/`
