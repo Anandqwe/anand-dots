@@ -1,151 +1,145 @@
-// ╔══════════════════════════════════════════════╗
-// ║         anand-dots — Waybar Config           ║
-// ╚══════════════════════════════════════════════╝
 {
-    "layer": "top",
-    "position": "top",
-    "height": 36,
-    "spacing": 0,
+  "layer": "top",
+  "position": "top",
+  "height": 34,
+  "spacing": 6,
 
-    // ── Module Layout ──────────────────────────
-    "modules-left": [
-        "hyprland/workspaces"
-    ],
-    "modules-center": [
-        "hyprland/window"
-    ],
-    "modules-right": [
-        "pulseaudio",
-        "bluetooth",
-        "network",
-        "cpu",
-        "memory",
-        "battery",
-        "clock",
-        "tray",
-        "custom/power"
-    ],
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
 
-    // ── Active Window ──────────────────────────
-    "hyprland/window": {
-        "format": "{}",
-        "max-length": 50,
-        "rewrite": {
-            "(.*) — Mozilla Firefox": " $1",
-            "(.*) - Visual Studio Code": " $1",
-            "(.*)": "$1"
-        },
-        "separate-outputs": true
+  "modules-center": [
+    "hyprland/window"
+  ],
+
+  "modules-right": [
+    "cpu",
+    "memory",
+    "pulseaudio",
+    "network",
+    "bluetooth",
+    "battery",
+    "clock",
+    "tray",
+    "custom/power"
+  ],
+
+  "hyprland/window": {
+    "format": "{}",
+    "max-length": 60
+  },
+
+  "hyprland/workspaces": {
+    "format": "{windows}",
+    "format-window-separator": " ",
+    "window-rewrite-default": "",
+    "window-rewrite": {
+      "class<firefox>": "",
+      "class<chromium>": "",
+      "class<brave-browser>": "",
+      "class<google-chrome>": "",
+      "class<kitty>": "",
+      "class<alacritty>": "",
+      "class<foot>": "",
+      "class<code>": "󰨞",
+      "class<code-oss>": "󰨞",
+      "class<codium>": "󰨞",
+      "class<cursor>": "󰨞",
+      "class<thunar>": "󰋜",
+      "class<nautilus>": "󰋜",
+      "class<org.gnome.Nautilus>": "󰋜",
+      "class<spotify>": "",
+      "class<discord>": "󰙯",
+      "class<vesktop>": "󰙯",
+      "class<telegram-desktop>": "",
+      "class<obsidian>": "󰶱",
+      "class<gimp>": "",
+      "class<inkscape>": "",
+      "class<vlc>": "󰕼",
+      "class<mpv>": "",
+      "class<steam>": "",
+      "class<lutris>": "",
+      "class<org.pwmt.zathura>": "󰈙",
+      "class<evince>": "󰈙",
+      "title<.*nvim.*>": "",
+      "title<.*vim.*>": "",
+      "title<.*YouTube.*>": ""
     },
-
-    // ── Workspaces ─────────────────────────────
-    "hyprland/workspaces": {
-        "format": "{icon}",
-        "format-icons": {
-            "1": " ",
-            "2": " ",
-            "3": " ",
-            "4": " ",
-            "5": " ",
-            "6": " ",
-            "7": " ",
-            "8": " ",
-            "9": " ",
-            "10": " ",
-            "default": " "
-        },
-        "persistent-workspaces": {
-            "*": 5
-        },
-        "on-click": "activate",
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1"
+    "persistent-workspaces": {
+      "*": 5
     },
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1"
+  },
 
-    // ── Clock ──────────────────────────────────
-    "clock": {
-        "format": "  {:%a %b %d   %H:%M}",
-        "tooltip-format": "<tt>{calendar}</tt>",
-        "calendar": {
-            "format": {
-                "today": "<b><u>{}</u></b>"
-            }
-        }
+  "clock": {
+    "format": "  {:%a %b %d  %H:%M}",
+    "tooltip-format": "<tt>{calendar}</tt>"
+  },
+
+  "cpu": {
+    "interval": 5,
+    "format": "  {usage}%"
+  },
+
+  "memory": {
+    "interval": 5,
+    "format": "  {}%"
+  },
+
+  "battery": {
+    "interval": 30,
+    "states": {
+      "warning": 30,
+      "critical": 15
     },
+    "format": "{icon} {capacity}%",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
 
-    // ── CPU ────────────────────────────────────
-    "cpu": {
-        "interval": 5,
-        "format": "  {usage}%",
-        "tooltip": true
+  "bluetooth": {
+    "format": "",
+    "format-connected": "  {device_alias}",
+    "on-click": "blueman-manager"
+  },
+
+  "network": {
+    "interval": 5,
+    "format-wifi": "  {essid}",
+    "format-ethernet": "󰈀  {ifname}",
+    "format-disconnected": "  Offline"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 Muted",
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        ""
+      ]
     },
+    "on-click": "pamixer -t",
+    "on-scroll-up": "pamixer -i 5",
+    "on-scroll-down": "pamixer -d 5"
+  },
 
-    // ── Memory ─────────────────────────────────
-    "memory": {
-        "interval": 5,
-        "format": "  {}%",
-        "tooltip-format": "{used:0.1f}G / {total:0.1f}G"
-    },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8
+  },
 
-    // ── Battery ────────────────────────────────
-    "battery": {
-        "interval": 30,
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon}  {capacity}%",
-        "format-charging": "  {capacity}%",
-        "format-plugged": "  {capacity}%",
-        "format-icons": [" ", " ", " ", " ", " "]
-    },
-
-    // ── Bluetooth ──────────────────────────────
-    "bluetooth": {
-        "format": "  {status}",
-        "format-connected": "  {device_alias}",
-        "format-connected-battery": "  {device_alias} {device_battery_percentage}%",
-        "format-disabled": "  Off",
-        "format-off": "  Off",
-        "tooltip-format": "{controller_alias}  {controller_address}\n{num_connections} connected",
-        "tooltip-format-connected": "{controller_alias}  {controller_address}\n{num_connections} connected\n\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}  {device_address}",
-        "tooltip-format-enumerate-connected-battery": "{device_alias}  {device_address}  {device_battery_percentage}%",
-        "on-click": "blueman-manager"
-    },
-
-    // ── Network ────────────────────────────────
-    "network": {
-        "interval": 5,
-        "format-wifi": "  {essid}",
-        "format-ethernet": "  {ifname}",
-        "format-disconnected": "  Offline",
-        "tooltip-format": "{ipaddr}/{cidr}\n{signalStrength}% signal",
-        "on-click": "nmgui"
-    },
-
-    // ── Volume ─────────────────────────────────
-    "pulseaudio": {
-        "format": "{icon}  {volume}%",
-        "format-muted": "  Muted",
-        "format-icons": {
-            "default": [" ", " ", " "]
-        },
-        "on-click": "pamixer -t",
-        "on-scroll-up": "pamixer -i 5",
-        "on-scroll-down": "pamixer -d 5"
-    },
-
-    // ── System Tray ────────────────────────────
-    "tray": {
-        "icon-size": 16,
-        "spacing": 8
-    },
-
-    // ── Power Button ───────────────────────────
-    "custom/power": {
-        "format": " ",
-        "tooltip": false,
-        "on-click": "~/.config/hypr/scripts/powermenu.sh"
-    }
+  "custom/power": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "~/.config/hypr/scripts/powermenu.sh"
+  }
 }

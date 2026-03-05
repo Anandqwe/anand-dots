@@ -1,16 +1,16 @@
 /* ╔══════════════════════════════════════════════╗ */
 /* ║         anand-dots — Waybar Style            ║ */
-/* ║         Theme: dracula                */
+/* ║         Theme: catppuccin-mocha                */
 /* ╚══════════════════════════════════════════════╝ */
 
 /* ── Color Reference ────────────────────────────── */
-/* base:     #282a36   mantle:   #21222c         */
-/* crust:    #191a21  text:     #f8f8f2           */
-/* subtext0: #bfbfbf surface0: #313341     */
-/* surface1: #383a4a blue:   #bd93f9           */
-/* mauve:    #bd93f9  green:    #50fa7b          */
-/* peach:    #ffb86c  yellow:   #f1fa8c         */
-/* red:      #ff5555    teal:     #8be9fd           */
+/* base:     #1e1e2e   mantle:   #181825         */
+/* crust:    #11111b  text:     #cdd6f4           */
+/* subtext0: #a6adc8 surface0: #313244     */
+/* surface1: #45475a blue:   #89b4fa           */
+/* mauve:    #cba6f7  green:    #a6e3a1          */
+/* peach:    #fab387  yellow:   #f9e2af         */
+/* red:      #f38ba8    teal:     #94e2d5           */
 
 /* ── Global ─────────────────────────────────────── */
 * {
@@ -20,16 +20,16 @@
 }
 
 window#waybar {
-    background-color: #282a36;
-    color: #f8f8f2;
+    background: transparent;
+    color: #cdd6f4;
 }
 
 /* ── Tooltip ────────────────────────────────────── */
 tooltip {
-    background-color: #21222c;
-    border: 1px solid #383a4a;
+    background-color: #181825;
+    border: 1px solid #45475a;
     border-radius: 8px;
-    color: #f8f8f2;
+    color: #cdd6f4;
 }
 
 /* ── Module Containers ──────────────────────────── */
@@ -47,13 +47,13 @@ tooltip {
     padding: 0 12px;
     margin: 4px 2px;
     border-radius: 8px;
-    background-color: #313341;
+    background-color: #313244;
     transition: all 0.2s ease;
 }
 
 /* ── Active Window Title ────────────────────────── */
 #window {
-    color: #f8f8f2;
+    color: #cdd6f4;
     font-weight: bold;
 }
 
@@ -64,7 +64,7 @@ tooltip {
 
 #workspaces button {
     padding: 0 8px;
-    color: #bfbfbf;
+    color: #a6adc8;
     border: none;
     border-radius: 6px;
     background: transparent;
@@ -72,87 +72,98 @@ tooltip {
 }
 
 #workspaces button:hover {
-    background-color: #383a4a;
-    color: #f8f8f2;
+    background-color: #45475a;
+    color: #cdd6f4;
 }
 
 #workspaces button.active {
-    background-color: #bd93f9;
-    color: #191a21;
+    background-color: #89b4fa;
+    color: #11111b;
     font-weight: bold;
 }
 
 #workspaces button.urgent {
-    background-color: #ff5555;
-    color: #191a21;
+    background-color: #f38ba8;
+    color: #11111b;
+}
+
+/* App icons inside workspace buttons */
+#workspaces button > widget {
+    margin: 0 1px;
+    font-size: 14px;
+}
+
+/* Give empty persistent workspaces a minimum size */
+#workspaces button {
+    min-width: 22px;
 }
 
 /* ── Clock ──────────────────────────────────────── */
 #clock {
-    color: #f8f8f2;
+    color: #cdd6f4;
     font-weight: bold;
 }
 
 /* ── CPU ────────────────────────────────────────── */
 #cpu {
-    color: #50fa7b;
+    color: #a6e3a1;
 }
 
 /* ── Memory ─────────────────────────────────────── */
 #memory {
-    color: #ffb86c;
+    color: #fab387;
 }
 
 /* ── Battery ────────────────────────────────────── */
 #battery {
-    color: #f1fa8c;
+    color: #f9e2af;
 }
 
 #battery.warning {
-    color: #ffb86c;
+    color: #fab387;
 }
 
 #battery.critical {
-    color: #ff5555;
+    color: #f38ba8;
     animation: blink 1s linear infinite;
 }
 
 @keyframes blink {
     to {
-        color: #f8f8f2;
+        color: #cdd6f4;
     }
 }
 
 /* ── Bluetooth ──────────────────────────────────── */
 #bluetooth {
-    color: #bd93f9;
+    color: #89b4fa;
 }
 
 #bluetooth.connected {
-    color: #8be9fd;
+    color: #89dceb;
 }
 
 #bluetooth.disabled,
 #bluetooth.off {
-    color: #bfbfbf;
+    color: #a6adc8;
 }
 
 /* ── Network ────────────────────────────────────── */
 #network {
-    color: #8be9fd;
+    color: #94e2d5;
 }
 
 #network.disconnected {
-    color: #bfbfbf;
+    color: #a6adc8;
 }
 
 /* ── Volume ─────────────────────────────────────── */
 #pulseaudio {
-    color: #bd93f9;
+    color: #cba6f7;
 }
 
 #pulseaudio.muted {
-    color: #bfbfbf;
+    color: #a6adc8;
 }
 
 /* ── System Tray ────────────────────────────────── */
@@ -170,11 +181,11 @@ tooltip {
 
 /* ── Power Button ───────────────────────────────── */
 #custom-power {
-    color: #ff5555;
+    color: #f38ba8;
     padding: 0 10px;
 }
 
 #custom-power:hover {
-    background-color: #ff5555;
-    color: #191a21;
+    background-color: #f38ba8;
+    color: #11111b;
 }

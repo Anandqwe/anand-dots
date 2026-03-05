@@ -21,6 +21,56 @@ success() { echo -e "${GREEN}[OK]${NC} $1"; }
 warn()    { echo -e "${YELLOW}[WARN]${NC} $1"; }
 error()   { echo -e "${RED}[ERROR]${NC} $1"; exit 1; }
 
+# ── User Input Functions ────────────────────
+prompt_yes_no() {
+    local prompt="$1"
+    local response
+    while true; do
+        read -p "$(echo -e ${BLUE}${prompt}${NC}) (y/n): " response
+        case "$response" in
+            [yY]) return 0 ;;
+            [nN]) return 1 ;;
+            *) echo "Please answer y or n." ;;
+        esac
+    done
+}
+
+select_theme() {
+    local themes=()
+    local i=1
+
+    # Gather available themes
+    while IFS= read -r theme_file; do
+        local theme_name="${theme_file%.conf}"
+        themes+=("$theme_name")
+    done < <(find "$DOTFILES_DIR/themes" -maxdepth 1 -name "*.conf" -type f | sort | xargs -I {} basename {})
+
+    if [[ ${#themes[@]} -eq 0 ]]; then
+        warn "No themes found. Using default: catppuccin-mocha"
+        echo "catppuccin-mocha"
+        return
+    fi
+
+    echo ""
+    echo -e "${BLUE}Available themes:${NC}"
+    for theme in "${themes[@]}"; do
+        echo "  $i) $theme"
+        ((i++))
+    done
+    echo ""
+
+    local choice
+    while true; do
+        read -p "$(echo -e ${BLUE}Select theme \(1-${#themes[@]}\):${NC}) " choice
+        if [[ "$choice" =~ ^[0-9]+$ ]] && [[ $choice -ge 1 ]] && [[ $choice -le ${#themes[@]} ]]; then
+            echo "${themes[$((choice-1))]}"
+            return
+        else
+            echo "Invalid selection. Please enter a number between 1 and ${#themes[@]}."
+        fi
+    done
+}
+
 # ── Check Arch Linux ───────────────────────────
 if [[ ! -f /etc/arch-release ]]; then
     error "This script is designed for Arch Linux."
@@ -177,11 +227,49 @@ main() {
     echo -e "${BLUE}╚══════════════════════════════════════════╝${NC}"
     echo ""
 
-    install_packages
-    create_directories
-    link_configs
-    link_scripts
-    link_theme "catppuccin-mocha"
+    # ── Ask for package installation ────────
+    if prompt_yes_no "[1/5] Install packages (pacman + AUR)?"; then
+        install_packages
+    else
+        info "Skipping package installation."
+    fi
+
+    echo ""
+
+    # ── Ask for directory creation ─────────
+    if prompt_yes_no "[2/5] Create directories and copy wallpapers?"; then
+        create_directories
+    else
+        info "Skipping directory creation."
+    fi
+
+    echo ""
+
+    # ── Ask for config linking ────────────
+    if prompt_yes_no "[3/5] Link configuration files?"; then
+        link_configs
+    else
+        info "Skipping config linking."
+    fi
+
+    echo ""
+
+    # ── Ask for script linking ────────────
+    if prompt_yes_no "[4/5] Link and make scripts executable?"; then
+        link_scripts
+    else
+        info "Skipping script linking."
+    fi
+
+    echo ""
+
+    # ── Ask for theme selection ──────────
+    if prompt_yes_no "[5/5] Select and apply a theme?"; then
+        local selected_theme=$(select_theme)
+        link_theme "$selected_theme"
+    else
+        info "Skipping theme setup. You can set it later with: ln -sf themes/{theme}.conf ~/.config/hypr/theme.conf"
+    fi
 
     echo ""
     echo -e "${GREEN}╔══════════════════════════════════════════╗${NC}"

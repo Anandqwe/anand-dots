@@ -20,7 +20,7 @@
 }
 
 window#waybar {
-    background-color: {{base}};
+    background: transparent;
     color: {{text}};
 }
 
@@ -85,6 +85,17 @@ tooltip {
 #workspaces button.urgent {
     background-color: {{red}};
     color: {{crust}};
+}
+
+/* App icons inside workspace buttons */
+#workspaces button > widget {
+    margin: 0 1px;
+    font-size: 14px;
+}
+
+/* Give empty persistent workspaces a minimum size */
+#workspaces button {
+    min-width: 22px;
 }
 
 /* ── Clock ──────────────────────────────────────── */
