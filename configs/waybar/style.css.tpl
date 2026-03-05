@@ -40,6 +40,7 @@ tooltip {
 #memory,
 #battery,
 #network,
+#bluetooth,
 #pulseaudio,
 #tray,
 #custom-power {
@@ -120,6 +121,20 @@ tooltip {
     to {
         color: {{text}};
     }
+}
+
+/* ── Bluetooth ──────────────────────────────────── */
+#bluetooth {
+    color: {{blue}};
+}
+
+#bluetooth.connected {
+    color: {{sky}};
+}
+
+#bluetooth.disabled,
+#bluetooth.off {
+    color: {{subtext0}};
 }
 
 /* ── Network ────────────────────────────────────── */

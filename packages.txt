@@ -61,6 +61,9 @@ firefox
 # Qt theming
 qt6ct
 
+# Bluetooth management
+blueman
+
 # Utilities
 jq
 libnotify
@@ -72,3 +75,5 @@ ttf-jetbrains-mono-nerd
 
 # Cursor theme
 bibata-cursor-theme
+# Network manager GUI
+nmgui
