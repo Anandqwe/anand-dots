@@ -10,6 +10,10 @@
 # Window manager
 hyprland
 
+# Lock screen & idle
+hyprlock
+hypridle
+
 # Status bar
 waybar
 
@@ -48,6 +52,15 @@ playerctl
 # Volume control
 pamixer
 
+# File manager
+thunar
+
+# Browser
+firefox
+
+# Qt theming
+qt6ct
+
 # Utilities
 jq
 libnotify
@@ -56,3 +69,6 @@ libnotify
 
 # Nerd Font
 ttf-jetbrains-mono-nerd
+
+# Cursor theme
+bibata-cursor-theme

@@ -12,7 +12,7 @@
         "hyprland/workspaces"
     ],
     "modules-center": [
-        "clock"
+        "hyprland/window"
     ],
     "modules-right": [
         "pulseaudio",
@@ -20,9 +20,22 @@
         "cpu",
         "memory",
         "battery",
+        "clock",
         "tray",
         "custom/power"
     ],
+
+    // ── Active Window ──────────────────────────
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 50,
+        "rewrite": {
+            "(.*) — Mozilla Firefox": " $1",
+            "(.*) - Visual Studio Code": " $1",
+            "(.*)": "$1"
+        },
+        "separate-outputs": true
+    },
 
     // ── Workspaces ─────────────────────────────
     "hyprland/workspaces": {
@@ -33,12 +46,19 @@
             "3": " ",
             "4": " ",
             "5": " ",
+            "6": " ",
+            "7": " ",
+            "8": " ",
+            "9": " ",
+            "10": " ",
             "default": " "
         },
         "persistent-workspaces": {
             "*": 5
         },
-        "on-click": "activate"
+        "on-click": "activate",
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1"
     },
 
     // ── Clock ──────────────────────────────────

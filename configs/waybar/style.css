@@ -34,6 +34,7 @@ tooltip {
 
 /* ── Module Containers ──────────────────────────── */
 #workspaces,
+#window,
 #clock,
 #cpu,
 #memory,
@@ -47,6 +48,12 @@ tooltip {
     border-radius: 8px;
     background-color: #313244;
     transition: all 0.2s ease;
+}
+
+/* ── Active Window Title ────────────────────────── */
+#window {
+    color: #cdd6f4;
+    font-weight: bold;
 }
 
 /* ── Workspaces ─────────────────────────────────── */

@@ -155,6 +155,16 @@ create_directories() {
     info "Creating directories..."
     mkdir -p "$HOME/Pictures/Screenshots"
     mkdir -p "$HOME/Pictures/Wallpapers"
+    mkdir -p "$HOME/.cache/anand-dots"          # wallpaper restore cache
+
+    # Copy bundled wallpapers (if any) to ~/Pictures/Wallpapers
+    local bundled="$DOTFILES_DIR/assets/wallpapers"
+    if [[ -d "$bundled" ]]; then
+        find "$bundled" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.webp" \) \
+            -exec cp -n {} "$HOME/Pictures/Wallpapers/" \;
+        info "Bundled wallpapers copied to ~/Pictures/Wallpapers"
+    fi
+
     success "Directories created."
 }
 
@@ -179,7 +189,19 @@ main() {
     echo -e "${GREEN}╚══════════════════════════════════════════╝${NC}"
     echo ""
     info "Log out and log back in to Hyprland to apply changes."
-    info "Or run: hyprctl reload"
+    info "Or if already in Hyprland, run: hyprctl reload"
+    echo ""
+    info "What's included:"
+    echo "  • Hyprland  — window manager with MD3 animations"
+    echo "  • Waybar    — status bar with window title"
+    echo "  • Hyprlock  — lock screen (SUPER+CTRL+L)"
+    echo "  • Hypridle  — auto-lock + dpms + suspend"
+    echo "  • Wofi      — app launcher (SUPER+D)"
+    echo "  • Mako      — notifications"
+    echo "  • swww      — wallpaper engine (SUPER+SHIFT+W)"
+    echo ""
+    warn "Optional: install 'bibata-cursor-theme' (AUR) for the Bibata cursor."
+    warn "Optional: install 'thunar' and 'firefox' if not already present."
     echo ""
 }
 

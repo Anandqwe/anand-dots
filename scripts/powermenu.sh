@@ -9,7 +9,7 @@ selected=$(echo -e "$options" | wofi --dmenu --prompt "Power" --width 250 --heig
 
 case "$selected" in
     *Lock)
-        swaylock ;;
+        hyprlock ;;
     *Logout)
         hyprctl dispatch exit ;;
     *Suspend)
