@@ -153,7 +153,7 @@ link_configs() {
     info "Linking configuration files..."
 
     # List of config directories to symlink
-    local configs=("hypr" "waybar" "kitty" "rofi" "mako" "wlogout")
+    local configs=("hypr" "waybar" "kitty" "rofi" "mako" "wlogout" "waypaper")
 
     for config in "${configs[@]}"; do
         local source="$DOTFILES_DIR/configs/$config"

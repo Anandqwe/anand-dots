@@ -74,6 +74,9 @@ libnotify
 # Power menu
 wlogout
 
+# Wallpaper manager GUI
+waypaper
+
 # Nerd Font
 ttf-jetbrains-mono-nerd
 
