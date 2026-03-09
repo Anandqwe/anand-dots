@@ -19,7 +19,7 @@ CONFIGS_DIR="$DOTFILES_DIR/configs"
 HYPR_CONF="$HOME/.config/hypr"
 WAYBAR_CONF="$HOME/.config/waybar"
 KITTY_CONF="$HOME/.config/kitty"
-WOFI_CONF="$HOME/.config/wofi"
+ROFI_CONF="$HOME/.config/rofi"
 MAKO_CONF="$HOME/.config/mako"
 
 # ── Colors for output ────────────────────────────
@@ -39,13 +39,12 @@ list_themes() {
     find "$THEMES_DIR" -name "*.conf" | sed 's/.*\///' | sed 's/\.conf//' | sort
 }
 
-# ── Pick theme with wofi ────────────────────────
+# ── Pick theme with rofi ──────────────────────────────
 pick_theme() {
-    list_themes | wofi --dmenu \
-        --prompt "Select theme" \
-        --insensitive \
-        --width 300 --height 250 \
-        --no-actions
+    list_themes | rofi -dmenu \
+        -p "Select theme" \
+        -i \
+        -theme-str 'window {width: 300px;}'
 }
 
 # ── Parse theme file: extract varname→hex ───────
@@ -149,9 +148,9 @@ reload_services() {
 main() {
     local theme_name="$1"
 
-    # If no argument, try wofi picker; fall back to listing themes
+    # If no argument, try rofi picker; fall back to listing themes
     if [[ -z "$theme_name" ]]; then
-        if command -v wofi &>/dev/null; then
+        if command -v rofi &>/dev/null; then
             theme_name="$(pick_theme)" || err "No theme selected."
         else
             echo "Available themes:"
@@ -177,8 +176,8 @@ main() {
     apply_template "$CONFIGS_DIR/waybar/style.css.tpl"      "$WAYBAR_CONF/style.css"         "$theme_name"
     success "  waybar style updated"
 
-    apply_template "$CONFIGS_DIR/wofi/style.css.tpl"        "$WOFI_CONF/style.css"           "$theme_name"
-    success "  wofi style updated"
+    apply_template "$CONFIGS_DIR/rofi/colors.rasi.tpl"      "$ROFI_CONF/colors.rasi"         "$theme_name"
+    success "  rofi colors updated"
 
     apply_template "$CONFIGS_DIR/mako/config.tpl"           "$MAKO_CONF/config"              "$theme_name"
     success "  mako config updated"

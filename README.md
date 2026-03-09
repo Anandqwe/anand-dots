@@ -19,7 +19,7 @@ Hyprland dotfiles for Arch Linux. A lightweight, keyboard-driven, modular deskto
 | Terminal | [Kitty](https://sw.kovidgoyal.net/kitty/) |
 | Shell | zsh |
 | Prompt | [Oh My Posh](https://ohmyposh.dev) |
-| Launcher | [Wofi](https://hg.sr.ht/~scoopta/wofi) |
+| Launcher | [Rofi](https://davatorium.github.io/rofi/) |
 | Notifications | [Mako](https://github.com/emersion/mako) |
 | Lock Screen | [hyprlock](https://github.com/hyprwm/hyprlock) |
 | Idle Daemon | [hypridle](https://github.com/hyprwm/hypridle) |
@@ -63,7 +63,8 @@ The uninstall script removes symlinks and optionally restores backed-up configs.
 | Key | Action |
 |-----|--------|
 | `SUPER + Return` | Open terminal (kitty) |
-| `SUPER + D` | Open launcher (wofi) |
+| `SUPER + D` | Open launcher (rofi) |
+| `SUPER + SHIFT + D` | Window switcher (rofi) |
 | `SUPER + B` | Open browser (firefox) |
 | `SUPER + E` | Open file manager (nautilus) |
 | `SUPER + Q` | Close window |
@@ -107,7 +108,7 @@ The uninstall script removes symlinks and optionally restores backed-up configs.
 | Key | Action |
 |-----|--------|
 | `SUPER + SHIFT + W` | Open wallpaper picker |
-| `SUPER + SHIFT + T` | Switch theme (wofi picker) |
+| `SUPER + SHIFT + T` | Switch theme (rofi picker) |
 | `SUPER + SHIFT + mouse scroll` | Zoom in/out |
 | `SUPER + SHIFT + Z` | Reset zoom |
 
@@ -130,7 +131,7 @@ Five high-quality themes are included, with **full theme switching** across all 
 - **dracula**
 
 ### GUI Picker
-Press `SUPER + SHIFT + T` to open a wofi picker listing all available themes. Select one to apply it instantly.
+Press `SUPER + SHIFT + T` to open a rofi picker listing all available themes. Select one to apply it instantly.
 
 ### Command Line
 ```bash
@@ -146,7 +147,7 @@ The theme switcher generates and applies colors to all components:
 - **Hyprland** — window borders and lock screen
 - **Waybar** — status bar
 - **Kitty** — terminal
-- **Wofi** — application launcher
+- **Rofi** — application launcher
 - **Mako** — notifications
 
 Each theme is defined once in `themes/`, and the theme switcher generates all app configs from templates automatically.
@@ -176,9 +177,10 @@ anand-dots/
 │   │   └── style.css          # Bar styling
 │   ├── kitty/
 │   │   └── kitty.conf         # Terminal config
-│   ├── wofi/
-│   │   ├── config             # Launcher settings
-│   │   └── style.css          # Launcher styling
+│   ├── rofi/
+│   │   ├── config.rasi         # Launcher layout and behavior
+│   │   ├── colors.rasi         # Color palette
+│   │   └── wallpaper.rasi      # Dynamic wallpaper background
 │   ├── mako/
 │   │   └── config             # Notification settings
 │   ├── fastfetch/
@@ -212,8 +214,8 @@ anand-dots/
 │   └── style.css.tpl          # Waybar CSS template
 ├── configs/kitty/
 │   └── kitty.conf.tpl         # Kitty config template
-├── configs/wofi/
-│   └── style.css.tpl          # Wofi CSS template
+├── configs/rofi/
+	└── colors.rasi.tpl        # Rofi color theme template
 ├── configs/mako/
 │   └── config.tpl             # Mako config template
 └── assets/

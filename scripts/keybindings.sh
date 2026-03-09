@@ -24,4 +24,4 @@ bindings=$(grep -E '^bind' "$CONFIG" \
         if (mod != "") printf "%-20s → %s\n", mod " + " key, action;
     }')
 
-echo "$bindings" | wofi --dmenu --prompt "Keybindings" --width 700 --height 500
+echo "$bindings" | rofi -dmenu -p "Keybindings"

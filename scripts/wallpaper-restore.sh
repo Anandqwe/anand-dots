@@ -17,6 +17,8 @@ if [[ -f "$CACHE_FILE" ]]; then
             --transition-type grow \
             --transition-duration 1 \
             --transition-fps 60
+        # Restore symlink for rofi
+        ln -sf "$WALLPAPER" "$HOME/.config/hypr/current_wallpaper"
         exit 0
     fi
 fi

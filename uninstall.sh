@@ -66,7 +66,7 @@ remove_config() {
 # ── Remove Config Symlinks ─────────────────────
 remove_configs() {
     info "Removing configuration symlinks..."
-    local configs=("hypr" "waybar" "kitty" "wofi" "mako")
+    local configs=("hypr" "waybar" "kitty" "rofi" "mako")
     for config in "${configs[@]}"; do
         remove_config "$CONFIG_DIR/$config"
     done

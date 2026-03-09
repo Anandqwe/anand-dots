@@ -34,4 +34,7 @@ CACHE_DIR="$HOME/.cache/anand-dots"
 mkdir -p "$CACHE_DIR"
 echo "$WALLPAPER" > "$CACHE_DIR/last-wallpaper"
 
+# Keep a symlink for rofi imagebox background
+ln -sf "$WALLPAPER" "$HOME/.config/hypr/current_wallpaper"
+
 notify-send "Wallpaper set" "$(basename "$WALLPAPER")"

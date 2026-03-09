@@ -1,0 +1,204 @@
+/* ╔══════════════════════════════════════════════╗ */
+/* ║       anand-dots — Rofi Launcher Config      ║ */
+/* ║  Design: binnewbs/arch-hyprland · mocha     ║ */
+/* ╚══════════════════════════════════════════════╝ */
+
+@theme "/dev/null"
+@import "colors.rasi"
+@import "wallpaper.rasi"
+
+/* ── Rofi Settings ─────────────────────────────── */
+configuration {
+    modi:                   "drun,run,window";
+    display-drun:           "Applications";
+    display-window:         "Windows";
+    display-run:            "Run";
+    drun-display-format:    "{icon} {name}";
+    font:                   "JetBrainsMono Nerd Font 11";
+    show-icons:             true;
+    icon-theme:             "Papirus-Dark";
+    terminal:               "kitty";
+    hover-select:           true;
+    me-select-entry:        "";
+    me-accept-entry:        "MousePrimary";
+    kb-cancel:              "Escape,Super+d";
+}
+
+/* ── Window ─────────────────────────────────────── */
+window {
+    transparency:           "real";
+    location:               center;
+    anchor:                 center;
+    fullscreen:             false;
+    width:                  1000px;
+    x-offset:               0px;
+    y-offset:               0px;
+    enabled:                true;
+    border:                 2px solid;
+    border-color:           @surface1;
+    border-radius:          16px;
+    cursor:                 "default";
+    background-color:       @crust;
+    padding:                0px;
+}
+
+/* ── Main Layout: horizontal split ─────────────── */
+mainbox {
+    enabled:                true;
+    spacing:                0px;
+    padding:                0px;
+    background-color:       transparent;
+    orientation:            horizontal;
+    children:               [ "imagebox", "listbox" ];
+}
+
+/* ── Left Panel: wallpaper + search + mode ──────── */
+imagebox {
+    padding:                20px;
+    width:                  420px;
+    background-color:       @crust;
+    orientation:            vertical;
+    children:               [ "inputbar", "dummy", "mode-switcher" ];
+}
+
+/* ── Right Panel: app list ──────────────────────── */
+listbox {
+    spacing:                10px;
+    padding:                20px;
+    background-color:       @crust;
+    orientation:            vertical;
+    children:               [ "message", "listview" ];
+    border-radius:          0px 14px 14px 0px;
+}
+
+dummy {
+    background-color:       transparent;
+    expand:                 true;
+}
+
+/* ── Input Bar ──────────────────────────────────── */
+inputbar {
+    enabled:                true;
+    spacing:                10px;
+    padding:                14px 16px;
+    border-radius:          10px;
+    background-color:       rgba(17, 17, 27, 0.78);
+    text-color:             @text;
+    children:               [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    enabled:                true;
+    expand:                 false;
+    str:                    "  ";
+    padding:                0px;
+    background-color:       inherit;
+    text-color:             @sky;
+}
+
+entry {
+    enabled:                true;
+    background-color:       inherit;
+    text-color:             @text;
+    cursor:                 text;
+    placeholder:            "Search";
+    placeholder-color:      @overlay2;
+}
+
+/* ── Mode Switcher ──────────────────────────────── */
+mode-switcher {
+    enabled:                true;
+    spacing:                10px;
+    background-color:       transparent;
+}
+
+button {
+    padding:                12px 16px;
+    border-radius:          10px;
+    background-color:       rgba(17, 17, 27, 0.78);
+    text-color:             @subtext1;
+    cursor:                 pointer;
+}
+
+button selected {
+    background-color:       @sky;
+    text-color:             @crust;
+}
+
+/* ── List View ──────────────────────────────────── */
+listview {
+    enabled:                true;
+    columns:                1;
+    lines:                  8;
+    cycle:                  true;
+    dynamic:                true;
+    scrollbar:              false;
+    layout:                 vertical;
+    reverse:                false;
+    fixed-height:           true;
+    fixed-columns:          true;
+    spacing:                6px;
+    background-color:       transparent;
+    text-color:             @text;
+    cursor:                 "default";
+}
+
+/* ── List Items ─────────────────────────────────── */
+element {
+    enabled:                true;
+    spacing:                14px;
+    padding:                8px 10px;
+    border-radius:          10px;
+    border:                 1px solid;
+    border-color:           rgba(0,0,0,0);
+    background-color:       transparent;
+    text-color:             @subtext1;
+    cursor:                 pointer;
+    orientation:            horizontal;
+}
+
+element normal.normal { background-color: transparent; text-color: @subtext1; }
+element normal.urgent { background-color: transparent; text-color: @red; }
+element normal.active { background-color: transparent; text-color: @teal; }
+
+element selected.normal { background-color: @sky; border-color: @sky; text-color: @crust; }
+element selected.urgent { background-color: @red; border-color: @red; text-color: @crust; }
+element selected.active { background-color: @teal; border-color: @teal; text-color: @crust; }
+element alternate.normal { background-color: transparent; text-color: @subtext0; }
+
+/* ── Item Icon & Text ───────────────────────────── */
+element-icon {
+    background-color:       transparent;
+    text-color:             inherit;
+    size:                   32px;
+    cursor:                 inherit;
+}
+
+element-text {
+    background-color:       transparent;
+    text-color:             inherit;
+    cursor:                 inherit;
+    vertical-align:         0.5;
+    horizontal-align:       0.0;
+}
+
+/* ── Message / Error ────────────────────────────── */
+message { background-color: transparent; }
+
+textbox {
+    padding:                12px 14px;
+    border-radius:          8px;
+    background-color:       @mantle;
+    text-color:             @subtext1;
+    vertical-align:         0.5;
+    horizontal-align:       0.0;
+}
+
+error-message {
+    padding:                14px;
+    border-radius:          10px;
+    border:                 1px solid;
+    border-color:           @red;
+    background-color:       rgba(243, 139, 168, 0.08);
+    text-color:             @red;
+}

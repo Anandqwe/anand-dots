@@ -4,7 +4,7 @@
 # Usage: ./focus.sh
 
 selected=$(hyprctl clients -j | jq -r '.[] | "\(.address) | \(.class) — \(.title)"' \
-    | wofi --dmenu --prompt "Windows" --width 600 --height 400 \
+    | rofi -dmenu -p "Windows" \
     | awk -F' \\| ' '{print $1}')
 
 if [[ -n "$selected" ]]; then

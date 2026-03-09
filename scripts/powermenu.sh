@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # ── powermenu.sh ────────────────────────────────
-# Power menu using wofi.
+# Power menu using rofi.
 # Usage: ./powermenu.sh
 
 options="  Lock\n  Logout\n  Suspend\n  Reboot\n  Shutdown"
 
-selected=$(echo -e "$options" | wofi --dmenu --prompt "Power" --width 250 --height 260 --lines 5)
+selected=$(echo -e "$options" | rofi -dmenu -p "Power")
 
 case "$selected" in
     *Lock)

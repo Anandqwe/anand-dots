@@ -35,7 +35,7 @@
   // ── App Launcher ──────────────────────────────
   "custom/appmenu": {
     "format": "Apps",
-    "on-click": "wofi --show drun",
+    "on-click": "~/.config/hypr/scripts/rofi-launcher.sh drun",
     "on-click-right": "~/.config/hypr/scripts/keybindings.sh",
     "tooltip-format": "Left: App Launcher\nRight: Keybindings"
   },
@@ -134,12 +134,18 @@
   // ── Bluetooth ─────────────────────────────────
   "bluetooth": {
     "format": "󰂯",
-    "format-connected": "󰂯 {num_connections}",
-    "format-disabled": "",
+    "format-on": "󰂯",
     "format-off": "󰂲",
-    "tooltip-format-connected": "{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}",
-    "on-click": "blueman-manager"
+    "format-disabled": "󰂲",
+    "format-no-controller": "",
+    "format-connected": "󰂱 {device_alias}",
+    "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+    "tooltip-format": "{controller_alias}  {controller_address}\nBluetooth {status}",
+    "tooltip-format-connected": "{controller_alias}  {controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "󰂱  {device_alias}\n   {device_address}",
+    "tooltip-format-enumerate-connected-battery": "󰂱  {device_alias}\n   {device_address}\n   Battery: {device_battery_percentage}%",
+    "on-click": "blueman-manager",
+    "on-click-right": "rfkill toggle bluetooth"
   },
 
   // ── Network ───────────────────────────────────
@@ -151,6 +157,7 @@
     "tooltip-format-wifi": "󰤨 {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%",
     "tooltip-format-ethernet": "󰈀 {ifname}\nIP: {ipaddr}",
     "tooltip-format-disconnected": "Disconnected",
+    "on-click": "hyprctl dispatch exec '[float] nmgui'",
     "max-length": 50
   },
 

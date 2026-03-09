@@ -153,7 +153,7 @@ link_configs() {
     info "Linking configuration files..."
 
     # List of config directories to symlink
-    local configs=("hypr" "waybar" "kitty" "wofi" "mako")
+    local configs=("hypr" "waybar" "kitty" "rofi" "mako")
 
     for config in "${configs[@]}"; do
         local source="$DOTFILES_DIR/configs/$config"
@@ -284,7 +284,7 @@ main() {
     echo "  • Waybar    — status bar with window title"
     echo "  • Hyprlock  — lock screen (SUPER+CTRL+L)"
     echo "  • Hypridle  — auto-lock + dpms + suspend"
-    echo "  • Wofi      — app launcher (SUPER+D)"
+    echo "  • Rofi      — app launcher (SUPER+D, SUPER+SHIFT+D for windows)"
     echo "  • Mako      — notifications"
     echo "  • swww      — wallpaper engine (SUPER+SHIFT+W)"
     echo ""

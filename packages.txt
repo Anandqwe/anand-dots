@@ -21,7 +21,8 @@ waybar
 kitty
 
 # Application launcher
-wofi
+rofi
+rofi-calc
 
 # Notification daemon
 mako
