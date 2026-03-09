@@ -71,6 +71,9 @@ libnotify
 
 [aur]
 
+# Power menu
+wlogout
+
 # Nerd Font
 ttf-jetbrains-mono-nerd
 

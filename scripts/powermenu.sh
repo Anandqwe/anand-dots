@@ -1,21 +1,17 @@
 #!/usr/bin/env bash
 # ── powermenu.sh ────────────────────────────────
-# Power menu using rofi.
+# Power menu using wlogout (wayland-native).
 # Usage: ./powermenu.sh
 
-options="  Lock\n  Logout\n  Suspend\n  Reboot\n  Shutdown"
+CONFIG_DIR="$HOME/.config/wlogout"
 
-selected=$(echo -e "$options" | rofi -dmenu -p "Power")
-
-case "$selected" in
-    *Lock)
-        hyprlock ;;
-    *Logout)
-        hyprctl dispatch exit ;;
-    *Suspend)
-        systemctl suspend ;;
-    *Reboot)
-        systemctl reboot ;;
-    *Shutdown)
-        systemctl poweroff ;;
-esac
+wlogout \
+    --layout          "$CONFIG_DIR/layout" \
+    --css             "$CONFIG_DIR/style.css" \
+    --buttons-per-row 5 \
+    --column-spacing  30 \
+    --row-spacing     30 \
+    --margin-top      320 \
+    --margin-bottom   320 \
+    --margin-left     130 \
+    --margin-right    130

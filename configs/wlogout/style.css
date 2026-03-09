@@ -1,0 +1,93 @@
+/* =====================================================
+   anand-dots -- wlogout | Theme: catppuccin-mocha
+   Inspired by JaKooLit/Hyprland-Dots
+   ===================================================== */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+    background-image: none;
+}
+
+window {
+    font-size:        18pt;
+    color:            #a6adc8;
+    background-color: rgba(17, 17, 27, 0.90);
+}
+
+button {
+    background-repeat:   no-repeat;
+    background-position: center 38%;
+    background-size:     22%;
+    background-color:    rgba(0, 0, 0, 0);
+    border:              0px;
+    border-radius:       16px;
+    outline:             none;
+    transition:          all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:focus {
+    background-size: 22%;
+    outline: none;
+}
+
+button:hover {
+    background-size:     32%;
+    background-position: center 34%;
+    margin:              20px;
+    border-radius:       20px;
+}
+
+button span {
+    font-size:   1.1em;
+    font-weight: 700;
+}
+
+#lock {
+    background-image: url("/home/anand/anand-dots/configs/wlogout/icons/lock.svg");
+}
+#lock:hover {
+    color:            #89dceb;
+    background-image: url("/home/anand/anand-dots/configs/wlogout/icons/lock-hover.svg");
+    background-color: rgba(137, 220, 235, 0.10);
+    box-shadow:       0 0 0 2px rgba(137, 220, 235, 0.50), inset 0 0 80px rgba(137, 220, 235, 0.06);
+}
+
+#logout {
+    background-image: url("/home/anand/anand-dots/configs/wlogout/icons/logout.svg");
+}
+#logout:hover {
+    color:            #fab387;
+    background-image: url("/home/anand/anand-dots/configs/wlogout/icons/logout-hover.svg");
+    background-color: rgba(250, 179, 135, 0.10);
+    box-shadow:       0 0 0 2px rgba(250, 179, 135, 0.50), inset 0 0 80px rgba(250, 179, 135, 0.06);
+}
+
+#suspend {
+    background-image: url("/home/anand/anand-dots/configs/wlogout/icons/suspend.svg");
+}
+#suspend:hover {
+    color:            #cba6f7;
+    background-image: url("/home/anand/anand-dots/configs/wlogout/icons/suspend-hover.svg");
+    background-color: rgba(203, 166, 247, 0.10);
+    box-shadow:       0 0 0 2px rgba(203, 166, 247, 0.50), inset 0 0 80px rgba(203, 166, 247, 0.06);
+}
+
+#reboot {
+    background-image: url("/home/anand/anand-dots/configs/wlogout/icons/reboot.svg");
+}
+#reboot:hover {
+    color:            #a6e3a1;
+    background-image: url("/home/anand/anand-dots/configs/wlogout/icons/reboot-hover.svg");
+    background-color: rgba(166, 227, 161, 0.10);
+    box-shadow:       0 0 0 2px rgba(166, 227, 161, 0.50), inset 0 0 80px rgba(166, 227, 161, 0.06);
+}
+
+#shutdown {
+    background-image: url("/home/anand/anand-dots/configs/wlogout/icons/shutdown.svg");
+}
+#shutdown:hover {
+    color:            #f38ba8;
+    background-image: url("/home/anand/anand-dots/configs/wlogout/icons/shutdown-hover.svg");
+    background-color: rgba(243, 139, 168, 0.10);
+    box-shadow:       0 0 0 2px rgba(243, 139, 168, 0.50), inset 0 0 80px rgba(243, 139, 168, 0.06);
+}
