@@ -1,0 +1,191 @@
+/* ╔══════════════════════════════════════════════╗ */
+/* ║         anand-dots — Waybar Style            ║ */
+/* ║         Theme: dracula                */
+/* ╚══════════════════════════════════════════════╝ */
+
+/* ── Color Reference ────────────────────────────── */
+/* base:     #282a36   mantle:   #21222c         */
+/* crust:    #191a21  text:     #f8f8f2           */
+/* subtext0: #bfbfbf surface0: #313341     */
+/* surface1: #383a4a blue:   #bd93f9           */
+/* mauve:    #bd93f9  green:    #50fa7b          */
+/* peach:    #ffb86c  yellow:   #f1fa8c         */
+/* red:      #ff5555    teal:     #8be9fd           */
+
+/* ── Global ─────────────────────────────────────── */
+* {
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #f8f8f2;
+}
+
+/* ── Tooltip ────────────────────────────────────── */
+tooltip {
+    background-color: #21222c;
+    border: 1px solid #383a4a;
+    border-radius: 8px;
+    color: #f8f8f2;
+}
+
+/* ── Module Containers ──────────────────────────── */
+#workspaces,
+#window,
+#clock,
+#cpu,
+#memory,
+#battery,
+#network,
+#bluetooth,
+#pulseaudio,
+#tray,
+#custom-power {
+    padding: 0 12px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    background-color: #313341;
+    transition: all 0.2s ease;
+}
+
+/* ── Active Window Title ────────────────────────── */
+#window {
+    color: #f8f8f2;
+    font-weight: bold;
+}
+
+/* ── Workspaces ─────────────────────────────────── */
+#workspaces {
+    padding: 0 4px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: #bfbfbf;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+#workspaces button:hover {
+    background-color: #383a4a;
+    color: #f8f8f2;
+}
+
+#workspaces button.active {
+    background-color: #bd93f9;
+    color: #191a21;
+    font-weight: bold;
+}
+
+#workspaces button.urgent {
+    background-color: #ff5555;
+    color: #191a21;
+}
+
+/* App icons inside workspace buttons */
+#workspaces button > widget {
+    margin: 0 1px;
+    font-size: 14px;
+}
+
+/* Give empty persistent workspaces a minimum size */
+#workspaces button {
+    min-width: 22px;
+}
+
+/* ── Clock ──────────────────────────────────────── */
+#clock {
+    color: #f8f8f2;
+    font-weight: bold;
+}
+
+/* ── CPU ────────────────────────────────────────── */
+#cpu {
+    color: #50fa7b;
+}
+
+/* ── Memory ─────────────────────────────────────── */
+#memory {
+    color: #ffb86c;
+}
+
+/* ── Battery ────────────────────────────────────── */
+#battery {
+    color: #f1fa8c;
+}
+
+#battery.warning {
+    color: #ffb86c;
+}
+
+#battery.critical {
+    color: #ff5555;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    to {
+        color: #f8f8f2;
+    }
+}
+
+/* ── Bluetooth ──────────────────────────────────── */
+#bluetooth {
+    color: #bd93f9;
+}
+
+#bluetooth.connected {
+    color: #8be9fd;
+}
+
+#bluetooth.disabled,
+#bluetooth.off {
+    color: #bfbfbf;
+}
+
+/* ── Network ────────────────────────────────────── */
+#network {
+    color: #8be9fd;
+}
+
+#network.disconnected {
+    color: #bfbfbf;
+}
+
+/* ── Volume ─────────────────────────────────────── */
+#pulseaudio {
+    color: #bd93f9;
+}
+
+#pulseaudio.muted {
+    color: #bfbfbf;
+}
+
+/* ── System Tray ────────────────────────────────── */
+#tray {
+    padding: 0 8px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+/* ── Power Button ───────────────────────────────── */
+#custom-power {
+    color: #ff5555;
+    padding: 0 10px;
+}
+
+#custom-power:hover {
+    background-color: #ff5555;
+    color: #191a21;
+}

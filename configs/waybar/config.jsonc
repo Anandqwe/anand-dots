@@ -1,145 +1,190 @@
 {
+  // ── General ───────────────────────────────────
   "layer": "top",
   "position": "top",
-  "height": 34,
-  "spacing": 6,
+  "margin-top": 6,
+  "margin-bottom": 0,
+  "margin-left": 8,
+  "margin-right": 8,
+  "spacing": 0,
 
+  // ── Modules Left ──────────────────────────────
   "modules-left": [
-    "hyprland/workspaces"
-  ],
-
-  "modules-center": [
+    "custom/appmenu",
+    "clock",
     "hyprland/window"
   ],
 
+  // ── Modules Center ────────────────────────────
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+
+  // ── Modules Right ─────────────────────────────
   "modules-right": [
-    "cpu",
-    "memory",
     "pulseaudio",
     "network",
     "bluetooth",
     "battery",
-    "clock",
+    "group/hardware",
     "tray",
+    "custom/clipboard",
     "custom/power"
   ],
 
-  "hyprland/window": {
-    "format": "{}",
-    "max-length": 60
+  // ── App Launcher ──────────────────────────────
+  "custom/appmenu": {
+    "format": "Apps",
+    "on-click": "wofi --show drun",
+    "on-click-right": "~/.config/hypr/scripts/keybindings.sh",
+    "tooltip-format": "Left: App Launcher\nRight: Keybindings"
   },
 
-  "hyprland/workspaces": {
-    "format": "{windows}",
-    "format-window-separator": " ",
-    "window-rewrite-default": "",
-    "window-rewrite": {
-      "class<firefox>": "",
-      "class<chromium>": "",
-      "class<brave-browser>": "",
-      "class<google-chrome>": "",
-      "class<kitty>": "",
-      "class<alacritty>": "",
-      "class<foot>": "",
-      "class<code>": "󰨞",
-      "class<code-oss>": "󰨞",
-      "class<codium>": "󰨞",
-      "class<cursor>": "󰨞",
-      "class<thunar>": "󰋜",
-      "class<nautilus>": "󰋜",
-      "class<org.gnome.Nautilus>": "󰋜",
-      "class<spotify>": "",
-      "class<discord>": "󰙯",
-      "class<vesktop>": "󰙯",
-      "class<telegram-desktop>": "",
-      "class<obsidian>": "󰶱",
-      "class<gimp>": "",
-      "class<inkscape>": "",
-      "class<vlc>": "󰕼",
-      "class<mpv>": "",
-      "class<steam>": "",
-      "class<lutris>": "",
-      "class<org.pwmt.zathura>": "󰈙",
-      "class<evince>": "󰈙",
-      "title<.*nvim.*>": "",
-      "title<.*vim.*>": "",
-      "title<.*YouTube.*>": ""
+  // ── Clock ─────────────────────────────────────
+  "clock": {
+    "format": "{:%H:%M  %a}",
+    "format-alt": "{:%Y-%m-%d  %H:%M:%S}",
+    "tooltip-format": "<tt>{calendar}</tt>"
+  },
+
+  // ── Active Window (with app icon) ─────────────
+  "hyprland/window": {
+    "icon": true,
+    "icon-size": 18,
+    "format": "{title}",
+    "max-length": 45,
+    "rewrite": {
+      "(.*) — Mozilla Firefox": "$1",
+      "(.*) - Chromium": "$1",
+      "(.*) - Brave": "$1",
+      "(.*) - Google Chrome": "$1"
     },
+    "separate-outputs": true
+  },
+
+  // ── Workspaces ────────────────────────────────
+  "hyprland/workspaces": {
+    "on-scroll-up": "hyprctl dispatch workspace r-1",
+    "on-scroll-down": "hyprctl dispatch workspace r+1",
+    "on-click": "activate",
+    "active-only": false,
+    "all-outputs": true,
+    "format": "{name}",
     "persistent-workspaces": {
       "*": 5
-    },
-    "on-click": "activate",
-    "on-scroll-up": "hyprctl dispatch workspace e+1",
-    "on-scroll-down": "hyprctl dispatch workspace e-1"
+    }
   },
 
-  "clock": {
-    "format": "  {:%a %b %d  %H:%M}",
-    "tooltip-format": "<tt>{calendar}</tt>"
+  // ── Hardware Group (drawer) ───────────────────
+  "group/hardware": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 300,
+      "children-class": "hw-child",
+      "transition-left-to-right": false
+    },
+    "modules": [
+      "custom/system",
+      "disk",
+      "cpu",
+      "memory"
+    ]
+  },
+
+  "custom/system": {
+    "format": "󰍛",
+    "tooltip-format": "System Resources"
   },
 
   "cpu": {
     "interval": 5,
-    "format": "  {usage}%"
+    "format": "󰍛 {usage}%"
   },
 
   "memory": {
     "interval": 5,
-    "format": "  {}%"
+    "format": "󰘙 {}%"
   },
 
-  "battery": {
+  "disk": {
     "interval": 30,
+    "format": "󰋊 {percentage_used}%",
+    "path": "/"
+  },
+
+  // ── Battery ───────────────────────────────────
+  "battery": {
+    "interval": 10,
     "states": {
       "warning": 30,
       "critical": 15
     },
     "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰂏 {capacity}%",
     "format-icons": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "󰂎",
+      "󰁺",
+      "󰁼",
+      "󰁾",
+      "󰁹"
     ]
   },
 
+  // ── Bluetooth ─────────────────────────────────
   "bluetooth": {
-    "format": "",
-    "format-connected": "  {device_alias}",
+    "format": "󰂯",
+    "format-connected": "󰂯 {num_connections}",
+    "format-disabled": "",
+    "format-off": "󰂲",
+    "tooltip-format-connected": "{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}",
     "on-click": "blueman-manager"
   },
 
+  // ── Network ───────────────────────────────────
   "network": {
-    "interval": 5,
-    "format-wifi": "  {essid}",
-    "format-ethernet": "󰈀  {ifname}",
-    "format-disconnected": "  Offline"
+    "format": "{ifname}",
+    "format-wifi": "󰤨 {signalStrength}%",
+    "format-ethernet": "󰈀 {ifname}",
+    "format-disconnected": "󰤭",
+    "tooltip-format-wifi": "󰤨 {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%",
+    "tooltip-format-ethernet": "󰈀 {ifname}\nIP: {ipaddr}",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50
   },
 
+  // ── Volume ────────────────────────────────────
   "pulseaudio": {
     "format": "{icon} {volume}%",
-    "format-muted": "󰝟 Muted",
+    "format-muted": "󰖁 Muted",
     "format-icons": {
-      "default": [
-        "",
-        "",
-        ""
-      ]
+      "headphone": "󰋋",
+      "default": ["󰕿", "󰖀", "󰕾"]
     },
     "on-click": "pamixer -t",
     "on-scroll-up": "pamixer -i 5",
     "on-scroll-down": "pamixer -d 5"
   },
 
-  "tray": {
-    "icon-size": 16,
-    "spacing": 8
+  // ── Clipboard ─────────────────────────────────
+  "custom/clipboard": {
+    "format": "󰐌",
+    "on-click": "~/.config/hypr/scripts/clipboard.sh",
+    "tooltip-format": "Clipboard History"
   },
 
+  // ── Tray ──────────────────────────────────────
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  },
+
+  // ── Power ─────────────────────────────────────
   "custom/power": {
-    "format": "",
-    "tooltip": false,
-    "on-click": "~/.config/hypr/scripts/powermenu.sh"
+    "format": "󰐥",
+    "tooltip-format": "Left: Power Menu\nRight: Lock Screen",
+    "on-click": "~/.config/hypr/scripts/powermenu.sh",
+    "on-click-right": "hyprlock"
   }
 }

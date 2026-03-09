@@ -1,117 +1,138 @@
 /* ╔══════════════════════════════════════════════╗ */
-/* ║         anand-dots — Waybar Style            ║ */
-/* ║         Theme: catppuccin-mocha                */
+/* ║      anand-dots — Waybar Style (ML4W)        ║ */
+/* ║      Theme: catppuccin-mocha                   ║ */
 /* ╚══════════════════════════════════════════════╝ */
-
-/* ── Color Reference ────────────────────────────── */
-/* base:     #1e1e2e   mantle:   #181825         */
-/* crust:    #11111b  text:     #cdd6f4           */
-/* subtext0: #a6adc8 surface0: #313244     */
-/* surface1: #45475a blue:   #89b4fa           */
-/* mauve:    #cba6f7  green:    #a6e3a1          */
-/* peach:    #fab387  yellow:   #f9e2af         */
-/* red:      #f38ba8    teal:     #94e2d5           */
 
 /* ── Global ─────────────────────────────────────── */
 * {
-    font-family: "JetBrainsMono Nerd Font", sans-serif;
-    font-size: 13px;
-    min-height: 0;
+    font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", "Font Awesome 6 Brands", FontAwesome, sans-serif;
+    font-size: 14px;
+    border: none;
+    border-radius: 0px;
 }
 
 window#waybar {
     background: transparent;
+}
+
+/* ── Floating Pill Containers ───────────────────── */
+
+.modules-left {
+    background-color: alpha(#1e1e2e, 0.85);
+    border-radius: 14px;
+    border: 1px solid alpha(#9399b2, 0.35);
+    padding: 0px;
+    margin: 4px 4px 4px 4px;
+}
+
+.modules-center {
+    background-color: alpha(#1e1e2e, 0.85);
+    border-radius: 14px;
+    border: 1px solid alpha(#9399b2, 0.35);
+    padding: 0px;
+    margin: 4px 4px 4px 4px;
+}
+
+.modules-right {
+    background-color: alpha(#1e1e2e, 0.85);
+    border-radius: 14px;
+    border: 1px solid alpha(#9399b2, 0.35);
+    padding: 0px;
+    margin: 4px 4px 4px 4px;
+}
+
+/* ── Module Labels (default) ────────────────────── */
+label.module {
+    font-size: 14px;
     color: #cdd6f4;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 /* ── Tooltip ────────────────────────────────────── */
 tooltip {
     background-color: #181825;
-    border: 1px solid #45475a;
-    border-radius: 8px;
-    color: #cdd6f4;
+    border-radius: 12px;
+    border: 1px solid alpha(#9399b2, 0.5);
+    opacity: 0.92;
+    padding: 8px;
 }
 
-/* ── Module Containers ──────────────────────────── */
-#workspaces,
-#window,
-#clock,
-#cpu,
-#memory,
-#battery,
-#network,
-#bluetooth,
-#pulseaudio,
-#tray,
-#custom-power {
-    padding: 0 12px;
-    margin: 4px 2px;
-    border-radius: 8px;
-    background-color: #313244;
-    transition: all 0.2s ease;
-}
-
-/* ── Active Window Title ────────────────────────── */
-#window {
+tooltip label {
     color: #cdd6f4;
-    font-weight: bold;
 }
 
 /* ── Workspaces ─────────────────────────────────── */
 #workspaces {
-    padding: 0 4px;
+    padding: 4px 4px;
 }
 
 #workspaces button {
-    padding: 0 8px;
     color: #a6adc8;
-    border: none;
-    border-radius: 6px;
+    border-radius: 8px;
+    padding: 0px 6px;
+    margin: 0px 2px;
+    min-width: 28px;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid transparent;
     background: transparent;
-    transition: all 0.2s ease;
-}
-
-#workspaces button:hover {
-    background-color: #45475a;
-    color: #cdd6f4;
 }
 
 #workspaces button.active {
-    background-color: #89b4fa;
-    color: #11111b;
-    font-weight: bold;
+    background: alpha(#89b4fa, 0.25);
+    border: 1px solid alpha(#89b4fa, 0.4);
+    color: #89b4fa;
+    border-radius: 10px;
+    min-width: 32px;
+    box-shadow: inset 0 1px 2px alpha(#89b4fa, 0.15);
+}
+
+#workspaces button:hover {
+    background: alpha(#9399b2, 0.25);
+    border-radius: 10px;
+    color: #cdd6f4;
 }
 
 #workspaces button.urgent {
-    background-color: #f38ba8;
-    color: #11111b;
+    background: alpha(#f38ba8, 0.3);
+    border: 1px solid alpha(#f38ba8, 0.5);
+    color: #f38ba8;
 }
 
-/* App icons inside workspace buttons */
-#workspaces button > widget {
-    margin: 0 1px;
-    font-size: 14px;
+/* ── Window Title ───────────────────────────────── */
+#window {
+    color: #9399b2;
+    font-weight: 400;
+    padding: 0 10px;
+    margin: 0 4px;
 }
 
-/* Give empty persistent workspaces a minimum size */
-#workspaces button {
-    min-width: 22px;
+#window image {
+    margin-right: 6px;
+}
+
+window#waybar.empty #window {
+    background-color: transparent;
+}
+
+/* ── App Launcher ───────────────────────────────── */
+#custom-appmenu {
+    padding: 0 10px;
+    margin: 0 4px;
+    color: #89b4fa;
+    font-weight: bold;
+}
+
+#custom-appmenu:hover {
+    color: #cdd6f4;
 }
 
 /* ── Clock ──────────────────────────────────────── */
 #clock {
     color: #cdd6f4;
-    font-weight: bold;
-}
-
-/* ── CPU ────────────────────────────────────────── */
-#cpu {
-    color: #a6e3a1;
-}
-
-/* ── Memory ─────────────────────────────────────── */
-#memory {
-    color: #fab387;
+    font-weight: 600;
+    padding: 0 10px;
+    margin: 0 4px;
 }
 
 /* ── Battery ────────────────────────────────────── */
@@ -119,11 +140,16 @@ tooltip {
     color: #f9e2af;
 }
 
+#battery.charging,
+#battery.plugged {
+    color: #a6e3a1;
+}
+
 #battery.warning {
     color: #fab387;
 }
 
-#battery.critical {
+#battery.critical:not(.charging) {
     color: #f38ba8;
     animation: blink 1s linear infinite;
 }
@@ -134,27 +160,24 @@ tooltip {
     }
 }
 
-/* ── Bluetooth ──────────────────────────────────── */
-#bluetooth {
-    color: #89b4fa;
-}
-
-#bluetooth.connected {
-    color: #89dceb;
-}
-
-#bluetooth.disabled,
-#bluetooth.off {
-    color: #a6adc8;
-}
-
 /* ── Network ────────────────────────────────────── */
 #network {
     color: #94e2d5;
 }
 
 #network.disconnected {
-    color: #a6adc8;
+    color: #9399b2;
+}
+
+/* ── Bluetooth ──────────────────────────────────── */
+#bluetooth,
+#bluetooth.on,
+#bluetooth.connected {
+    color: #89b4fa;
+}
+
+#bluetooth.off {
+    color: #9399b2;
 }
 
 /* ── Volume ─────────────────────────────────────── */
@@ -163,12 +186,36 @@ tooltip {
 }
 
 #pulseaudio.muted {
+    color: #9399b2;
+}
+
+/* ── Hardware Group / Drawer ────────────────────── */
+#disk,
+#memory,
+#cpu {
+    margin: 0 6px;
+    padding: 0 8px;
     color: #a6adc8;
 }
 
-/* ── System Tray ────────────────────────────────── */
-#tray {
+#custom-system {
+    color: #a6e3a1;
+    margin: 0 6px;
     padding: 0 8px;
+}
+
+/* ── Clipboard ──────────────────────────────────── */
+#custom-clipboard {
+    color: #cdd6f4;
+}
+
+#custom-clipboard:hover {
+    color: #94e2d5;
+}
+
+/* ── Tray ───────────────────────────────────────── */
+#tray {
+    padding: 0px 8px;
 }
 
 #tray > .passive {
@@ -179,13 +226,29 @@ tooltip {
     -gtk-icon-effect: highlight;
 }
 
-/* ── Power Button ───────────────────────────────── */
+/* ── Power ──────────────────────────────────────── */
 #custom-power {
     color: #f38ba8;
-    padding: 0 10px;
+    padding: 0 12px 0 8px;
 }
 
 #custom-power:hover {
+    color: #cdd6f4;
+}
+
+/* ── Updates (yellow/red badges) ────────────────── */
+#custom-updates.yellow {
+    border-radius: 8px;
+    margin: 4px 0px 4px 4px;
+    padding: 0px 6px;
+    background-color: #f9e2af;
+    color: #11111b;
+}
+
+#custom-updates.red {
+    border-radius: 8px;
+    margin: 4px 0px 4px 4px;
+    padding: 0px 6px;
     background-color: #f38ba8;
     color: #11111b;
 }
