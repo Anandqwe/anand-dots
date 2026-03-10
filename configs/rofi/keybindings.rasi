@@ -1,0 +1,144 @@
+/* ╔══════════════════════════════════════════════════╗ */
+/* ║   anand-dots — Rofi Keybinding Cheatsheet        ║ */
+/* ║   Clean two-column layout · catppuccin-mocha     ║ */
+/* ╚══════════════════════════════════════════════════╝ */
+
+@theme "/dev/null"
+@import "colors.rasi"
+
+/* ── Rofi Settings ─────────────────────────────────── */
+configuration {
+    modi:                   "drun";
+    font:                   "JetBrainsMono Nerd Font 11";
+    show-icons:             false;
+    kb-cancel:              "Escape,super+ctrl+k";
+    hover-select:           true;
+    me-select-entry:        "";
+    me-accept-entry:        "MousePrimary";
+}
+
+/* ── Global Defaults ───────────────────────────────── */
+* {
+    background-color:       transparent;
+    text-color:             @text;
+}
+
+/* ── Window ────────────────────────────────────────── */
+window {
+    width:                  920px;
+    background-color:       @crust;
+    border:                 2px solid;
+    border-color:           @surface1;
+    border-radius:          18px;
+    location:               center;
+    anchor:                 center;
+    padding:                0px;
+    cursor:                 "default";
+}
+
+/* ── Main Layout (vertical, no sidebar) ────────────── */
+mainbox {
+    orientation:            vertical;
+    spacing:                0px;
+    padding:                0px;
+    background-color:       transparent;
+    children:               [ "inputbar", "message", "listview" ];
+}
+
+/* ── Search Bar ────────────────────────────────────── */
+inputbar {
+    enabled:                true;
+    spacing:                10px;
+    padding:                13px 18px;
+    margin:                 22px 22px 0px 22px;
+    border-radius:          12px;
+    background-color:       @surface0;
+    text-color:             @text;
+    children:               [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    enabled:                true;
+    expand:                 false;
+    str:                    "  ";
+    background-color:       transparent;
+    text-color:             @sky;
+    padding:                0px;
+    vertical-align:         0.5;
+}
+
+entry {
+    enabled:                true;
+    background-color:       transparent;
+    text-color:             @text;
+    cursor:                 text;
+    placeholder:            "Search keybindings…";
+    placeholder-color:      @overlay2;
+    vertical-align:         0.5;
+}
+
+/* ── Title / Message ───────────────────────────────── */
+message {
+    padding:                14px 24px 4px 24px;
+    background-color:       transparent;
+    margin:                 0px;
+}
+
+textbox {
+    background-color:       transparent;
+    text-color:             @mauve;
+    font:                   "JetBrainsMono Nerd Font Bold 12";
+    horizontal-align:       0;
+    vertical-align:         0.5;
+    padding:                0px;
+}
+
+/* ── Keybinding List ───────────────────────────────── */
+listview {
+    enabled:                true;
+    padding:                6px 18px 18px 18px;
+    spacing:                1px;
+    scrollbar:              false;
+    lines:                  20;
+    columns:                1;
+    dynamic:                false;
+    fixed-height:           true;
+    background-color:       transparent;
+    cursor:                 "default";
+}
+
+/* ── Each Row ──────────────────────────────────────── */
+element {
+    enabled:                true;
+    padding:                5px 14px;
+    border-radius:          7px;
+    spacing:                0px;
+    background-color:       transparent;
+    cursor:                 pointer;
+    orientation:            horizontal;
+}
+
+element normal.normal {
+    background-color:       transparent;
+    text-color:             @text;
+}
+
+element selected.normal {
+    background-color:       @surface0;
+    text-color:             @text;
+}
+
+element alternate.normal {
+    background-color:       transparent;
+    text-color:             @text;
+}
+
+element-text {
+    background-color:       transparent;
+    text-color:             inherit;
+    expand:                 true;
+    highlight:              bold italic #89b4fa;
+    vertical-align:         0.5;
+    horizontal-align:       0;
+    cursor:                 inherit;
+}
