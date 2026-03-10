@@ -153,7 +153,7 @@ link_configs() {
     info "Linking configuration files..."
 
     # List of config directories to symlink
-    local configs=("hypr" "waybar" "kitty" "rofi" "mako" "wlogout" "waypaper")
+    local configs=("hypr" "waybar" "kitty" "rofi" "mako" "wlogout" "waypaper" "fastfetch" "ohmyposh")
 
     for config in "${configs[@]}"; do
         local source="$DOTFILES_DIR/configs/$config"
@@ -197,6 +197,10 @@ link_scripts() {
 
     # Make all scripts executable
     chmod +x "$DOTFILES_DIR/scripts/"*.sh
+
+    # Make settings app executable
+    [[ -f "$DOTFILES_DIR/settings/main.py" ]] && chmod +x "$DOTFILES_DIR/settings/main.py"
+
     success "Scripts linked and made executable."
 }
 
@@ -287,9 +291,9 @@ main() {
     echo "  • Rofi      — app launcher (SUPER+D, SUPER+SHIFT+D for windows)"
     echo "  • Mako      — notifications"
     echo "  • swww      — wallpaper engine (SUPER+SHIFT+W)"
+    echo "  • Settings  — GTK4 settings GUI (SUPER+CTRL+S)"
     echo ""
-    warn "Optional: install 'bibata-cursor-theme' (AUR) for the Bibata cursor."
-    warn "Optional: install 'thunar' and 'firefox' if not already present."
+    warn "Optional: place wallpapers in ~/Pictures/Wallpapers/"
     echo ""
 }
 

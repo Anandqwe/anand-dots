@@ -29,6 +29,7 @@ Hyprland dotfiles for Arch Linux. A lightweight, keyboard-driven, modular deskto
 | File Manager | [Nautilus](https://gitlab.gnome.org/GNOME/nautilus) |
 | Browser | Firefox |
 | System Info | [fastfetch](https://github.com/fastfetch-cli/fastfetch) |
+| **Settings GUI** | GTK4 / Libadwaita (built-in) |
 
 ## Installation
 
@@ -41,12 +42,14 @@ chmod +x install.sh
 
 The install script will:
 1. Install required packages via pacman and yay
-2. Backup existing configs
+2. Backup existing configs (saved as `*.bak.TIMESTAMP`)
 3. Symlink configs to `~/.config/`
-4. Set Catppuccin Mocha as the default theme
-5. Make scripts executable
+4. Prompt you to pick a theme (default: catppuccin-mocha)
+5. Make scripts and the settings app executable
 
 After installation, log out and log back into Hyprland.
+
+> **Requirements:** `python-gobject`, `libadwaita`, `gtk4` — needed for the Settings GUI. These are installed automatically by the install script.
 
 ### Uninstall
 
@@ -109,6 +112,7 @@ The uninstall script removes symlinks and optionally restores backed-up configs.
 |-----|--------|
 | `SUPER + SHIFT + W` | Open wallpaper picker |
 | `SUPER + SHIFT + T` | Switch theme (rofi picker) |
+| `SUPER + CTRL + S` | Open Settings GUI |
 | `SUPER + SHIFT + mouse scroll` | Zoom in/out |
 | `SUPER + SHIFT + Z` | Reset zoom |
 
@@ -119,6 +123,30 @@ The uninstall script removes symlinks and optionally restores backed-up configs.
 | `Volume Mute` | Toggle mute |
 | `Brightness Up/Down` | Adjust brightness |
 | `Play/Pause` | Toggle media |
+
+## Settings GUI
+
+A GTK4 / Libadwaita settings application lets you tweak the entire configuration visually — no config file editing needed.
+
+**Launch:** `SUPER + CTRL + S` or:
+```bash
+~/.config/hypr/scripts/settings.sh
+```
+
+### Pages
+| Page | What you can configure |
+|------|------------------------|
+| General | Gaps, borders, layout, cursor size, tearing |
+| Appearance | Corner radius, opacity, blur, shadows |
+| Animations | Master toggle, per-category speed |
+| Theme | Switch between the 5 built-in color themes |
+| Monitor | Resolution, refresh rate, display scale |
+| Input | Keyboard layout, mouse sensitivity, touchpad |
+| Idle & Lock | Dim / lock / DPMS / suspend timeouts |
+| Terminal | Font, opacity, padding, cursor, scrollback |
+| Notifications | Duration, position, width, border, rounding |
+
+Every setting has a description explaining what it does and what happens at high/low values. Click **Apply** to save all changes and auto-reload all services.
 
 ## Theme Switching
 
@@ -188,16 +216,20 @@ anand-dots/
 │   ├── ohmyposh/
 │   │   └── zen.toml           # Shell prompt theme
 │   └── zsh/                   # Zsh shell config
+├── settings/
+│   └── main.py                # GTK4 settings GUI (SUPER+CTRL+S)
 ├── scripts/
 │   ├── reload.sh              # Reload environment
 │   ├── powermenu.sh           # Power menu
 │   ├── screenshot.sh          # Screenshot tool
+│   ├── settings.sh            # Launch settings GUI
 │   ├── wallpaper.sh           # Wallpaper picker
 │   ├── wallpaper-restore.sh   # Restore last wallpaper
 │   ├── clipboard.sh           # Clipboard history
 │   ├── focus.sh               # Focus helper
 │   ├── gamemode.sh            # Toggle game mode
 │   ├── keybindings.sh         # Show keybindings cheatsheet
+│   ├── matugen-apply.sh       # Apply dynamic wallpaper colors
 │   ├── theme.sh               # Full theme switcher
 │   ├── toggle-animations.sh   # Toggle animations on/off
 │   └── toggle-waybar.sh       # Toggle Waybar visibility
@@ -225,6 +257,9 @@ anand-dots/
 
 ## Customization
 
+> **Tip:** Most settings can be changed via the **Settings GUI** (`SUPER+CTRL+S`) without editing any files.
+
+- **Everything visual**: Use the Settings GUI — gaps, blur, shadows, opacity, animations, theme, monitor, idle timeouts, terminal, notifications
 - **Monitor**: Edit `configs/hypr/monitors.conf`
 - **Keybindings**: Edit `configs/hypr/keybindings.conf`
 - **Window rules**: Edit `configs/hypr/rules.conf`

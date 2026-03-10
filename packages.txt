@@ -69,6 +69,11 @@ blueman
 jq
 libnotify
 
+# Settings GUI requirements
+python-gobject
+libadwaita
+gtk4
+
 [aur]
 
 # Power menu

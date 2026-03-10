@@ -66,7 +66,7 @@ remove_config() {
 # ── Remove Config Symlinks ─────────────────────
 remove_configs() {
     info "Removing configuration symlinks..."
-    local configs=("hypr" "waybar" "kitty" "rofi" "mako")
+    local configs=("hypr" "waybar" "kitty" "rofi" "mako" "wlogout" "waypaper" "fastfetch" "ohmyposh")
     for config in "${configs[@]}"; do
         remove_config "$CONFIG_DIR/$config"
     done
@@ -146,6 +146,7 @@ remove_directories() {
     local dirs=(
         "$HOME/Pictures/Screenshots"
         "$HOME/Pictures/Wallpapers"
+        "$HOME/.cache/anand-dots"
     )
 
     for dir in "${dirs[@]}"; do
