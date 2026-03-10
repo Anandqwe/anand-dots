@@ -23,6 +23,7 @@
   // ── Modules Right ─────────────────────────────
   "modules-right": [
     "pulseaudio",
+    "backlight",
     "network",
     "bluetooth",
     "battery",
@@ -159,6 +160,18 @@
     "tooltip-format-disconnected": "Disconnected",
     "on-click": "hyprctl dispatch exec '[float] nmgui'",
     "max-length": 50
+  },
+
+  // ── Brightness ───────────────────────────────
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{icon} {percent}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+    "on-scroll-up": "brightnessctl set +2%",
+    "on-scroll-down": "brightnessctl set 2%-",
+    "on-click": "brightnessctl set 100%",
+    "on-click-right": "brightnessctl set 20%",
+    "tooltip-format": "Brightness: {percent}%\nScroll: adjust\nLeft: max | Right: dim"
   },
 
   // ── Volume ────────────────────────────────────

@@ -41,11 +41,14 @@ WALLPAPER="$1"
 # ── Generate colors ─────────────────────────────
 info "Generating colors from: $(basename "$WALLPAPER")"
 
-JSON=$(matugen -j hex image "$WALLPAPER" 2>/dev/null) || err "matugen failed to generate colors from: $WALLPAPER"
+# --source-color-index 0 picks the first extracted color automatically,
+# bypassing the interactive TUI picker (required for non-TTY/background use).
+JSON=$(matugen -j hex image --source-color-index 0 "$WALLPAPER" 2>/dev/null) || err "matugen failed to generate colors from: $WALLPAPER"
 
 # ── Extract Material You colors (dark scheme) ───
+# matugen v4 JSON structure: .colors.<name>.dark.color
 # Helper: extract color from JSON, strip leading #
-c() { echo "$JSON" | jq -r ".colors.dark.${1}" | sed 's/^#//'; }
+c() { echo "$JSON" | jq -r ".colors.${1}.dark.color" | sed 's/^#//'; }
 
 # Material You color roles
 primary=$(c "primary")

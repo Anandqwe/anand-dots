@@ -16,5 +16,11 @@ echo "$WALLPAPER" > "$CACHE_DIR/last-wallpaper"
 # Symlink for other tools that need current wallpaper path
 ln -sf "$WALLPAPER" "$HOME/.config/hypr/current_wallpaper"
 
+# Apply dynamic colors from wallpaper (matugen)
+SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"  
+if [[ -f "$SCRIPT_DIR/matugen-apply.sh" ]] && command -v matugen &>/dev/null; then
+    bash "$SCRIPT_DIR/matugen-apply.sh" "$WALLPAPER" &
+fi
+
 notify-send -i preferences-desktop-wallpaper-symbolic \
     "Wallpaper" "$(basename "$WALLPAPER")"

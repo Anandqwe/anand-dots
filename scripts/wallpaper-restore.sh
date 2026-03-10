@@ -19,6 +19,11 @@ if [[ -f "$CACHE_FILE" ]]; then
             --transition-fps 60
         # Restore symlink for rofi
         ln -sf "$WALLPAPER" "$HOME/.config/hypr/current_wallpaper"
+        # Re-apply dynamic colors so they match the restored wallpaper
+        SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+        if [[ -f "$SCRIPT_DIR/matugen-apply.sh" ]] && command -v matugen &>/dev/null; then
+            bash "$SCRIPT_DIR/matugen-apply.sh" "$WALLPAPER" &
+        fi
         exit 0
     fi
 fi
