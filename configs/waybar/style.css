@@ -1,6 +1,6 @@
 /* ╔══════════════════════════════════════════════╗ */
 /* ║      anand-dots — Waybar Style (ML4W)        ║ */
-/* ║      Theme: catppuccin-mocha                   ║ */
+/* ║      Theme: nord                   ║ */
 /* ╚══════════════════════════════════════════════╝ */
 
 /* ── Global ─────────────────────────────────────── */
@@ -18,25 +18,25 @@ window#waybar {
 /* ── Floating Pill Containers ───────────────────── */
 
 .modules-left {
-    background-color: alpha(#1e1e2e, 0.85);
+    background-color: alpha(#2e3440, 0.85);
     border-radius: 14px;
-    border: 1px solid alpha(#9399b2, 0.35);
+    border: 1px solid alpha(#9aa3b5, 0.35);
     padding: 0px;
     margin: 4px 4px 4px 4px;
 }
 
 .modules-center {
-    background-color: alpha(#1e1e2e, 0.85);
+    background-color: alpha(#2e3440, 0.85);
     border-radius: 14px;
-    border: 1px solid alpha(#9399b2, 0.35);
+    border: 1px solid alpha(#9aa3b5, 0.35);
     padding: 0px;
     margin: 4px 4px 4px 4px;
 }
 
 .modules-right {
-    background-color: alpha(#1e1e2e, 0.85);
+    background-color: alpha(#2e3440, 0.85);
     border-radius: 14px;
-    border: 1px solid alpha(#9399b2, 0.35);
+    border: 1px solid alpha(#9aa3b5, 0.35);
     padding: 0px;
     margin: 4px 4px 4px 4px;
 }
@@ -44,22 +44,22 @@ window#waybar {
 /* ── Module Labels (default) ────────────────────── */
 label.module {
     font-size: 14px;
-    color: #cdd6f4;
+    color: #eceff4;
     margin-left: 8px;
     margin-right: 8px;
 }
 
 /* ── Tooltip ────────────────────────────────────── */
 tooltip {
-    background-color: #181825;
+    background-color: #292e39;
     border-radius: 12px;
-    border: 1px solid alpha(#9399b2, 0.5);
+    border: 1px solid alpha(#9aa3b5, 0.5);
     opacity: 0.92;
     padding: 8px;
 }
 
 tooltip label {
-    color: #cdd6f4;
+    color: #eceff4;
 }
 
 /* ── Workspaces ─────────────────────────────────── */
@@ -68,7 +68,7 @@ tooltip label {
 }
 
 #workspaces button {
-    color: #a6adc8;
+    color: #d8dee9;
     border-radius: 8px;
     padding: 0px 6px;
     margin: 0px 2px;
@@ -79,29 +79,29 @@ tooltip label {
 }
 
 #workspaces button.active {
-    background: alpha(#89b4fa, 0.25);
-    border: 1px solid alpha(#89b4fa, 0.4);
-    color: #89b4fa;
+    background: alpha(#81a1c1, 0.25);
+    border: 1px solid alpha(#81a1c1, 0.4);
+    color: #81a1c1;
     border-radius: 10px;
     min-width: 32px;
-    box-shadow: inset 0 1px 2px alpha(#89b4fa, 0.15);
+    box-shadow: inset 0 1px 2px alpha(#81a1c1, 0.15);
 }
 
 #workspaces button:hover {
-    background: alpha(#9399b2, 0.25);
+    background: alpha(#9aa3b5, 0.25);
     border-radius: 10px;
-    color: #cdd6f4;
+    color: #eceff4;
 }
 
 #workspaces button.urgent {
-    background: alpha(#f38ba8, 0.3);
-    border: 1px solid alpha(#f38ba8, 0.5);
-    color: #f38ba8;
+    background: alpha(#bf616a, 0.3);
+    border: 1px solid alpha(#bf616a, 0.5);
+    color: #bf616a;
 }
 
 /* ── Window Title ───────────────────────────────── */
 #window {
-    color: #9399b2;
+    color: #9aa3b5;
     font-weight: 400;
     padding: 0 10px;
     margin: 0 4px;
@@ -117,19 +117,20 @@ window#waybar.empty #window {
 
 /* ── App Launcher ───────────────────────────────── */
 #custom-appmenu {
-    padding: 0 10px;
+    padding: 0 12px;
     margin: 0 4px;
-    color: #89b4fa;
+    color: #81a1c1;
+    font-size: 18px;
     font-weight: bold;
 }
 
 #custom-appmenu:hover {
-    color: #cdd6f4;
+    color: #eceff4;
 }
 
 /* ── Clock ──────────────────────────────────────── */
 #clock {
-    color: #cdd6f4;
+    color: #eceff4;
     font-weight: 600;
     padding: 0 10px;
     margin: 0 4px;
@@ -137,56 +138,56 @@ window#waybar.empty #window {
 
 /* ── Battery ────────────────────────────────────── */
 #battery {
-    color: #f9e2af;
+    color: #ebcb8b;
 }
 
 #battery.charging,
 #battery.plugged {
-    color: #a6e3a1;
+    color: #a3be8c;
 }
 
 #battery.warning {
-    color: #fab387;
+    color: #d08770;
 }
 
 #battery.critical:not(.charging) {
-    color: #f38ba8;
+    color: #bf616a;
     animation: blink 1s linear infinite;
 }
 
 @keyframes blink {
     to {
-        color: #cdd6f4;
+        color: #eceff4;
     }
 }
 
 /* ── Network ────────────────────────────────────── */
 #network {
-    color: #94e2d5;
+    color: #8fbcbb;
 }
 
 #network.disconnected {
-    color: #9399b2;
+    color: #9aa3b5;
 }
 
 /* ── Bluetooth ──────────────────────────────────── */
 #bluetooth,
 #bluetooth.on,
 #bluetooth.connected {
-    color: #89b4fa;
+    color: #81a1c1;
 }
 
 #bluetooth.off {
-    color: #9399b2;
+    color: #9aa3b5;
 }
 
 /* ── Volume ─────────────────────────────────────── */
 #pulseaudio {
-    color: #cba6f7;
+    color: #b48ead;
 }
 
 #pulseaudio.muted {
-    color: #9399b2;
+    color: #9aa3b5;
 }
 
 /* ── Hardware Group / Drawer ────────────────────── */
@@ -195,22 +196,22 @@ window#waybar.empty #window {
 #cpu {
     margin: 0 6px;
     padding: 0 8px;
-    color: #a6adc8;
+    color: #d8dee9;
 }
 
 #custom-system {
-    color: #a6e3a1;
+    color: #a3be8c;
     margin: 0 6px;
     padding: 0 8px;
 }
 
 /* ── Clipboard ──────────────────────────────────── */
 #custom-clipboard {
-    color: #cdd6f4;
+    color: #eceff4;
 }
 
 #custom-clipboard:hover {
-    color: #94e2d5;
+    color: #8fbcbb;
 }
 
 /* ── Tray ───────────────────────────────────────── */
@@ -228,12 +229,12 @@ window#waybar.empty #window {
 
 /* ── Power ──────────────────────────────────────── */
 #custom-power {
-    color: #f38ba8;
+    color: #bf616a;
     padding: 0 12px 0 8px;
 }
 
 #custom-power:hover {
-    color: #cdd6f4;
+    color: #eceff4;
 }
 
 /* ── Updates (yellow/red badges) ────────────────── */
@@ -241,14 +242,14 @@ window#waybar.empty #window {
     border-radius: 8px;
     margin: 4px 0px 4px 4px;
     padding: 0px 6px;
-    background-color: #f9e2af;
-    color: #11111b;
+    background-color: #ebcb8b;
+    color: #242933;
 }
 
 #custom-updates.red {
     border-radius: 8px;
     margin: 4px 0px 4px 4px;
     padding: 0px 6px;
-    background-color: #f38ba8;
-    color: #11111b;
+    background-color: #bf616a;
+    color: #242933;
 }

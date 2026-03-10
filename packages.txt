@@ -74,6 +74,9 @@ libnotify
 # Power menu
 wlogout
 
+# Dynamic wallpaper colors
+matugen-bin
+
 # Wallpaper manager GUI
 waypaper
 

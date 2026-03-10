@@ -1,15 +1,15 @@
 # ╔══════════════════════════════════════════════╗
 # ║         anand-dots — Mako Config              ║
-# ║         Theme: catppuccin-mocha                 ║
+# ║         Theme: nord                 ║
 # ╚══════════════════════════════════════════════╝
 
 # ── Font ────────────────────────────────────────
 font=JetBrainsMono Nerd Font 11
 
 # ── Colors ──────────────────────────────────────
-background-color=#1e1e2eee
-text-color=#cdd6f4
-border-color=#89b4fa
+background-color=#2e3440ee
+text-color=#eceff4
+border-color=#81a1c1
 
 # ── Layout ──────────────────────────────────────
 width=350
@@ -31,13 +31,13 @@ max-icon-size=48
 
 # ── Urgency: Low ───────────────────────────────
 [urgency=low]
-border-color=#313244
+border-color=#3b4252
 
 # ── Urgency: Normal ────────────────────────────
 [urgency=normal]
-border-color=#89b4fa
+border-color=#81a1c1
 
 # ── Urgency: Critical ──────────────────────────
 [urgency=critical]
-border-color=#f38ba8
+border-color=#bf616a
 default-timeout=0

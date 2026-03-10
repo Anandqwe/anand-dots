@@ -37,4 +37,11 @@ echo "$WALLPAPER" > "$CACHE_DIR/last-wallpaper"
 # Keep a symlink for rofi imagebox background
 ln -sf "$WALLPAPER" "$HOME/.config/hypr/current_wallpaper"
 
+# Apply dynamic colors from wallpaper (matugen)
+MATUGEN_SCRIPT="$(dirname "$(realpath "${BASH_SOURCE[0]}")")/../scripts/matugen-apply.sh"
+[[ ! -f "$MATUGEN_SCRIPT" ]] && MATUGEN_SCRIPT="$(dirname "$(realpath "${BASH_SOURCE[0]}")")/matugen-apply.sh"
+if [[ -f "$MATUGEN_SCRIPT" ]] && command -v matugen &>/dev/null; then
+    bash "$MATUGEN_SCRIPT" "$WALLPAPER" &
+fi
+
 notify-send "Wallpaper set" "$(basename "$WALLPAPER")"

@@ -117,9 +117,10 @@ window#waybar.empty #window {
 
 /* ── App Launcher ───────────────────────────────── */
 #custom-appmenu {
-    padding: 0 10px;
+    padding: 0 12px;
     margin: 0 4px;
     color: {{blue}};
+    font-size: 18px;
     font-weight: bold;
 }
 

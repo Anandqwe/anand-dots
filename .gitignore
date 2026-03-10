@@ -18,3 +18,29 @@ node_modules/
 # Build artifacts
 *.o
 *.so
+
+# ═════════════════════════════════════════════════════
+# Symlinked config protection
+# ═════════════════════════════════════════════════════
+# Since /home/anand/anand-dots/configs is symlinked to
+# ~/.config, changes to live system configs may reflect
+# in this repo. Use .gitignore to prevent committing
+# personal/system-specific modifications.
+
+# Runtime/generated files (never commit):
+configs/hypr/current_wallpaper
+configs/rofi/wallpaper.rasi
+
+# Waypaper: personal state (modified by GUI, not defaults)
+# Uncomment if waypaper config changes shouldn't be tracked:
+# configs/waypaper/
+
+# System-specific personal modifications:
+# Add patterns below to ignore personal overrides:
+# configs/waybar/custom.conf
+# configs/kitty/custom.conf
+
+# Always exclude backups/test files:
+*.bak
+*.test
+*.swp
