@@ -1,35 +1,35 @@
 /* ╔══════════════════════════════════════════════╗ */
 /* ║       anand-dots — Rofi Colors Template      ║ */
-/* ║       Theme: catppuccin-mocha                  ║ */
+/* ║       Theme: material-you                  ║ */
 /* ╚══════════════════════════════════════════════╝ */
 
 * {
     /* ── Base surfaces ──────────────────── */
-    base:           #1e1e2e;
-    mantle:         #181825;
-    crust:          #11111b;
+    base:           #0e141c;
+    mantle:         #0e141c;
+    crust:          #060c14;
 
     /* ── Overlay surfaces ───────────────── */
-    surface0:       #313244;
-    surface1:       #45475a;
-    surface2:       #585b70;
+    surface0:       #171d25;
+    surface1:       #1d232c;
+    surface2:       #282e36;
 
     /* ── Text ───────────────────────────── */
-    text:           #cdd6f4;
-    subtext1:       #bac2de;
-    subtext0:       #a6adc8;
-    overlay2:       #9399b2;
+    text:           #e2e7f3;
+    subtext1:       #c1c7d2;
+    subtext0:       #9197a1;
+    overlay2:       #9197a1;
 
     /* ── Accent colors ──────────────────── */
-    blue:           #89b4fa;
-    sky:            #89dceb;
-    teal:           #94e2d5;
-    mauve:          #cba6f7;
-    lavender:       #b4befe;
-    green:          #a6e3a1;
-    yellow:         #f9e2af;
-    peach:          #fab387;
-    red:            #f38ba8;
+    blue:           #a0c9ff;
+    sky:            #b6c4ef;
+    teal:           #c2c2f9;
+    mauve:          #a9b6f0;
+    lavender:       #a2bcea;
+    green:          #c5d6f1;
+    yellow:         #a7bfe0;
+    peach:          #c4cff3;
+    red:            #ffb4ab;
 
     /* ── Transparency helpers ───────────── */
     bg-transparent: rgba(0, 0, 0, 0.0);

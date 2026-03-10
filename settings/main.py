@@ -30,8 +30,8 @@ HYPRIDLE_CONF = os.path.join(HYPR_DIR, "hypridle.conf")
 KITTY_CONF = os.path.join(KITTY_DIR, "kitty.conf")
 MAKO_CONF = os.path.join(MAKO_DIR, "config")
 
-THEMES_DIR = os.path.join(DOTFILES_DIR, "themes")
-THEME_SCRIPT = os.path.join(DOTFILES_DIR, "scripts", "theme.sh")
+MATUGEN_SCRIPT = os.path.join(DOTFILES_DIR, "scripts", "matugen-apply.sh")
+CACHE_DIR = os.path.expanduser("~/.cache/anand-dots")
 
 
 # ══════════════════════════════════════════════════════
@@ -468,7 +468,7 @@ class SettingsWindow(Adw.ApplicationWindow):
             ("general", "General", "preferences-system-symbolic"),
             ("appearance", "Appearance", "applications-graphics-symbolic"),
             ("animations", "Animations", "view-reveal-symbolic"),
-            ("theme", "Theme", "preferences-color-symbolic"),
+            ("theme", "Material You", "preferences-color-symbolic"),
             ("monitor", "Monitor", "video-display-symbolic"),
             ("input", "Input", "input-keyboard-symbolic"),
             ("idle", "Idle & Lock", "system-lock-screen-symbolic"),
@@ -840,55 +840,62 @@ class SettingsWindow(Adw.ApplicationWindow):
                     return True
         return False
 
-    # ── Theme ───────────────────────────────────────
+    # ── Material You ────────────────────────────────
     def _page_theme(self):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=24)
 
+        # Current status
         g = Adw.PreferencesGroup(
-            title="Color Theme",
-            description="Choose a color scheme applied across Hyprland, Waybar, Kitty, Rofi, and Mako",
+            title="Material You",
+            description="Colors are automatically generated from your wallpaper using matugen.\n"
+            "Change your wallpaper to get a new color scheme.",
         )
 
-        themes = []
-        if os.path.exists(THEMES_DIR):
-            themes = sorted(
-                f.replace(".conf", "")
-                for f in os.listdir(THEMES_DIR)
-                if f.endswith(".conf")
-            )
+        scheme_types = [
+            "scheme-vibrant",
+            "scheme-expressive",
+            "scheme-tonal-spot",
+            "scheme-fidelity",
+            "scheme-content",
+            "scheme-fruit-salad",
+            "scheme-rainbow",
+            "scheme-neutral",
+            "scheme-monochrome",
+        ]
+        current_scheme = "scheme-vibrant"
+        scheme_cache = os.path.join(CACHE_DIR, "scheme-type")
+        if os.path.exists(scheme_cache):
+            with open(scheme_cache) as f:
+                current_scheme = f.read().strip()
 
-        cache = os.path.expanduser("~/.cache/anand-dots/current-theme")
-        current = ""
-        if os.path.exists(cache):
-            with open(cache) as f:
-                current = f.read().strip()
-
-        if themes:
-            self.r_theme = make_combo_row(
-                "Active Theme",
-                "Switching themes regenerates Waybar CSS, Kitty colors, Rofi palette,\n"
-                "Mako notification colors, and Hyprlock from templates.",
-                themes, current,
-            )
-            g.add(self.r_theme)
+        self.r_scheme_type = make_combo_row(
+            "Color Scheme Style",
+            "vibrant = rich saturated colors (recommended) · expressive = most colorful\n"
+            "tonal-spot = Android default · fidelity = closest to wallpaper colors\n"
+            "neutral/monochrome = minimal · rainbow/fruit-salad = diverse hues",
+            scheme_types, current_scheme,
+        )
+        g.add(self.r_scheme_type)
         box.append(g)
 
-        descs = {
-            "catppuccin-mocha": ("Catppuccin Mocha", "Warm pastel colors on a dark base — the most popular community theme. Soft purples, pinks, and blues."),
-            "dracula": ("Dracula", "Bold purple-accented dark theme with high contrast. Classic, vibrant, recognizable."),
-            "gruvbox-dark": ("Gruvbox Dark", "Retro warm tones with earthy oranges and greens. Easy on the eyes for long coding sessions."),
-            "nord": ("Nord", "Cool arctic blue palette. Clean, minimal, professional feel. Inspired by Nordic nature."),
-            "tokyo-night": ("Tokyo Night", "Inspired by Tokyo citylights at night. Modern dark blues with vibrant accent colors."),
+        scheme_descs = {
+            "scheme-vibrant": ("Vibrant", "Rich, saturated colors. Best for desktop ricing — colors pop without being overwhelming."),
+            "scheme-expressive": ("Expressive", "Most colorful option. Tertiary hue shifts far from primary for maximum variety."),
+            "scheme-tonal-spot": ("Tonal Spot", "Android's default. Balanced colors with moderate saturation."),
+            "scheme-fidelity": ("Fidelity", "Stays closest to the actual colors in your wallpaper image."),
+            "scheme-content": ("Content", "Similar to tonal-spot. Balanced color extraction."),
+            "scheme-fruit-salad": ("Fruit Salad", "Diverse hues spread across primary/secondary/tertiary."),
+            "scheme-rainbow": ("Rainbow", "Colors spread across the full hue wheel for high variety."),
+            "scheme-neutral": ("Neutral", "Very muted, almost monochrome. Clean minimal look."),
+            "scheme-monochrome": ("Monochrome", "Pure grayscale. No color, just light and dark tones."),
         }
 
-        g = Adw.PreferencesGroup(title="Available Themes")
-        for t in themes:
-            if t in descs:
-                title, desc = descs[t]
-                row = Adw.ActionRow(title=title, subtitle=desc)
-                row.set_subtitle_lines(3)
-                row.add_prefix(Gtk.Image.new_from_icon_name("color-select-symbolic"))
-                g.add(row)
+        g = Adw.PreferencesGroup(title="Scheme Styles")
+        for sid, (title, desc) in scheme_descs.items():
+            row = Adw.ActionRow(title=title, subtitle=desc)
+            row.set_subtitle_lines(3)
+            row.add_prefix(Gtk.Image.new_from_icon_name("color-select-symbolic"))
+            g.add(row)
         box.append(g)
 
         return box
@@ -1288,16 +1295,27 @@ class SettingsWindow(Adw.ApplicationWindow):
         self.anims.save()
 
     def _save_theme(self):
-        if not hasattr(self, "r_theme"):
+        if not hasattr(self, "r_scheme_type"):
             return
-        idx = self.r_theme._dropdown.get_selected()
-        theme = self.r_theme._options[idx]
-        if os.path.exists(THEME_SCRIPT):
-            subprocess.Popen(
-                ["bash", THEME_SCRIPT, theme],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
+        idx = self.r_scheme_type._dropdown.get_selected()
+        scheme = self.r_scheme_type._options[idx]
+
+        # Save the scheme type preference
+        os.makedirs(CACHE_DIR, exist_ok=True)
+        with open(os.path.join(CACHE_DIR, "scheme-type"), "w") as f:
+            f.write(scheme)
+
+        # Re-apply matugen with the new scheme type
+        wallpaper_cache = os.path.join(CACHE_DIR, "last-wallpaper")
+        if os.path.exists(wallpaper_cache) and os.path.exists(MATUGEN_SCRIPT):
+            with open(wallpaper_cache) as f:
+                wallpaper = f.read().strip()
+            if wallpaper and os.path.exists(wallpaper):
+                subprocess.Popen(
+                    ["bash", MATUGEN_SCRIPT, wallpaper],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
 
     def _save_monitor(self):
         res = self.r_res._options[self.r_res._dropdown.get_selected()]

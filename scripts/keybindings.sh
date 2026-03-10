@@ -110,11 +110,10 @@ entries=(
 
     "$(div)"
 
-    # ── Wallpapers & Themes ────────────────────────────────
-    "$(hdr "󰸉  Wallpapers & Themes")"
+    # ── Wallpapers ─────────────────────────────────────────
+    "$(hdr "󰸉  Wallpapers")"
     "$(bind "SUPER + CTRL + W"         "Open Wallpaper Manager (Waypaper)")"
     "$(bind "SUPER + SHIFT + W"        "Apply a Random Wallpaper")"
-    "$(bind "SUPER + SHIFT + T"        "Open Theme Switcher")"
 
     "$(div)"
 

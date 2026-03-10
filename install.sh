@@ -68,7 +68,7 @@ while getopts "pdcstah" opt; do
             echo "  -d  Create directories and copy wallpapers"
             echo "  -c  Link configuration files"
             echo "  -s  Link scripts and make them executable"
-            echo "  -t  Select and apply a theme"
+            echo "  -t  Apply Material You colors from wallpaper"
             echo "  -a  All steps (non-interactive)"
             echo "  (no flags)  Interactive mode — prompts for each step"
             exit 0 ;;
@@ -107,33 +107,32 @@ ask_step() {
     fi
 }
 
-select_theme() {
-    local themes=() i=1
-    while IFS= read -r f; do
-        themes+=("$(basename "${f%.conf}")")
-    done < <(find "$DOTFILES_DIR/themes" -maxdepth 1 -name "*.conf" -type f | sort)
+apply_colors() {
+    step "Applying Material You colors"
+    local matugen_script="$DOTFILES_DIR/scripts/matugen-apply.sh"
 
-    if [[ ${#themes[@]} -eq 0 ]]; then
-        warn "No themes found in themes/. Defaulting to catppuccin-mocha."
-        echo "catppuccin-mocha"; return
+    if ! command -v matugen &>/dev/null; then
+        warn "matugen not installed — skipping color generation."
+        warn "Colors will be applied on first wallpaper change."
+        return
     fi
 
-    echo "" >&2
-    echo -e "${CYAN}Available themes:${NC}" >&2
-    for t in "${themes[@]}"; do
-        printf "  %d) %s\n" "$i" "$t" >&2
-        ((i++))
-    done
-    echo "" >&2
+    # Find a wallpaper to generate colors from
+    local wallpaper
+    wallpaper=$(find "$HOME/Pictures/Wallpapers" -type f \
+        \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.webp" \) \
+        2>/dev/null | head -1)
 
-    local choice
-    while true; do
-        read -rp "$(echo -e "${BLUE}[?]${NC} Select theme (1-${#themes[@]}): ")" choice
-        if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${#themes[@]} )); then
-            echo "${themes[$((choice-1))]}"; return
-        fi
-        echo "  Invalid — enter a number between 1 and ${#themes[@]}." >&2
-    done
+    if [[ -z "$wallpaper" ]]; then
+        warn "No wallpapers found — colors will be applied on first wallpaper change."
+        return
+    fi
+
+    if [[ -f "$matugen_script" ]]; then
+        bash "$matugen_script" "$wallpaper" 2>&1 | tee -a "$LOG" \
+            && success "Material You colors applied from: $(basename "$wallpaper")" \
+            || warn "Color generation failed — will retry on wallpaper change."
+    fi
 }
 
 # ── Dependency Checks ────────────────────────────
@@ -285,21 +284,6 @@ link_configs() {
     done
 }
 
-# ── Link Theme ────────────────────────────────
-link_theme() {
-    local theme="${1:-catppuccin-mocha}"
-    local src="$DOTFILES_DIR/themes/${theme}.conf"
-    local dst="$CONFIG_DIR/hypr/theme.conf"
-
-    if [[ -f "$src" ]]; then
-        ln -sf "$src" "$dst"
-        success "Theme applied: $theme"
-    else
-        warn "Theme file not found: ${theme}.conf"
-        warn "Available themes:"; ls "$DOTFILES_DIR/themes/" | tee -a "$LOG"
-    fi
-}
-
 # ── Link Scripts ──────────────────────────────
 link_scripts() {
     step "Setting up scripts"
@@ -435,14 +419,12 @@ main() {
 
     echo ""
 
-    # ── Theme ───────────────────────────────
-    if ask_step "$_do_theme" "[5/5] Select and apply a theme?"; then
-        local chosen_theme
-        chosen_theme=$(select_theme)
-        link_theme "$chosen_theme"
+    # ── Colors ───────────────────────────────
+    if ask_step "$_do_theme" "[5/5] Apply Material You colors from wallpaper?"; then
+        apply_colors
     else
-        info "Skipping theme setup."
-        info "Apply later: ln -sf \$DOTFILES/themes/<name>.conf ~/.config/hypr/theme.conf"
+        info "Skipping color setup."
+        info "Colors will be applied automatically on wallpaper change."
     fi
 
     echo ""
