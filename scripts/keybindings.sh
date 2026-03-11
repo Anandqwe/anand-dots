@@ -42,6 +42,7 @@ entries=(
     "$(bind "SUPER + E"                "File Manager (Nautilus)")"
     "$(bind "SUPER + X"                "Power Menu")"
     "$(bind "SUPER + SHIFT + V"        "Clipboard History")"
+    "$(bind "SUPER + ALT + V"           "Delete Clipboard Entry")"
 
     "$(div)"
 

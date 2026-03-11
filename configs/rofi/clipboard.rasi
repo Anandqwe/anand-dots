@@ -1,0 +1,137 @@
+/* ╔══════════════════════════════════════════════╗ */
+/* ║      anand-dots — Rofi Clipboard Picker      ║ */
+/* ║      Dedicated clipboard history layout      ║ */
+/* ╚══════════════════════════════════════════════╝ */
+
+@theme "/dev/null"
+@import "colors.rasi"
+
+/* ── Rofi Settings ─────────────────────────────── */
+configuration {
+    modi:                   "drun";
+    font:                   "JetBrainsMono Nerd Font 11";
+    show-icons:             false;
+    kb-cancel:              "Escape,Super+shift+v";
+    hover-select:           true;
+    me-select-entry:        "";
+    me-accept-entry:        "MousePrimary";
+}
+
+/* ── Global Defaults ───────────────────────────── */
+* {
+    background-color:       transparent;
+    text-color:             @text;
+}
+
+/* ── Window ────────────────────────────────────── */
+window {
+    width:                  860px;
+    background-color:       @crust;
+    border:                 2px solid;
+    border-color:           @surface1;
+    border-radius:          18px;
+    location:               center;
+    anchor:                 center;
+    padding:                0px;
+    cursor:                 "default";
+}
+
+/* ── Main Layout ───────────────────────────────── */
+mainbox {
+    orientation:            vertical;
+    spacing:                0px;
+    padding:                0px;
+    background-color:       transparent;
+    children:               [ "inputbar", "listview" ];
+}
+
+/* ── Search / Prompt Bar ───────────────────────── */
+inputbar {
+    enabled:                true;
+    spacing:                10px;
+    padding:                14px 18px;
+    margin:                 20px 20px 8px 20px;
+    border-radius:          12px;
+    background-color:       @surface0;
+    text-color:             @text;
+    children:               [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    enabled:                true;
+    expand:                 false;
+    str:                    "  ";
+    background-color:       transparent;
+    text-color:             @blue;
+    padding:                0px;
+    vertical-align:         0.5;
+}
+
+entry {
+    enabled:                true;
+    background-color:       transparent;
+    text-color:             @text;
+    cursor:                 text;
+    placeholder:            "Search clipboard…";
+    placeholder-color:      @overlay2;
+    vertical-align:         0.5;
+}
+
+/* ── Clipboard Entry List ──────────────────────── */
+listview {
+    enabled:                true;
+    padding:                4px 18px 18px 18px;
+    spacing:                1px;
+    scrollbar:              true;
+    lines:                  14;
+    columns:                1;
+    dynamic:                true;
+    fixed-height:           false;
+    background-color:       transparent;
+    cursor:                 "default";
+}
+
+scrollbar {
+    width:                  4px;
+    border:                 0px;
+    handle-color:           @surface2;
+    handle-width:           4px;
+    background-color:       transparent;
+    padding:                0px 2px;
+}
+
+/* ── Rows ──────────────────────────────────────── */
+element {
+    enabled:                true;
+    padding:                8px 14px;
+    border-radius:          8px;
+    spacing:                0px;
+    background-color:       transparent;
+    cursor:                 pointer;
+    orientation:            horizontal;
+}
+
+element normal.normal {
+    background-color:       transparent;
+    text-color:             @text;
+}
+
+element selected.normal {
+    background-color:       @surface0;
+    text-color:             @blue;
+}
+
+element alternate.normal {
+    background-color:       rgba(25, 28, 38, 0.5);
+    text-color:             @subtext1;
+}
+
+element-text {
+    background-color:       transparent;
+    text-color:             inherit;
+    expand:                 true;
+    highlight:              bold #b2c5ff;
+    vertical-align:         0.5;
+    horizontal-align:       0;
+    cursor:                 inherit;
+}

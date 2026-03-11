@@ -18,25 +18,25 @@ window#waybar {
 /* ── Floating Pill Containers ───────────────────── */
 
 .modules-left {
-    background-color: alpha(#0e141c, 0.85);
+    background-color: alpha(#10131c, 0.85);
     border-radius: 14px;
-    border: 1px solid alpha(#9197a1, 0.35);
+    border: 1px solid alpha(#9396a2, 0.35);
     padding: 0px;
     margin: 4px 4px 4px 4px;
 }
 
 .modules-center {
-    background-color: alpha(#0e141c, 0.85);
+    background-color: alpha(#10131c, 0.85);
     border-radius: 14px;
-    border: 1px solid alpha(#9197a1, 0.35);
+    border: 1px solid alpha(#9396a2, 0.35);
     padding: 0px;
     margin: 4px 4px 4px 4px;
 }
 
 .modules-right {
-    background-color: alpha(#0e141c, 0.85);
+    background-color: alpha(#10131c, 0.85);
     border-radius: 14px;
-    border: 1px solid alpha(#9197a1, 0.35);
+    border: 1px solid alpha(#9396a2, 0.35);
     padding: 0px;
     margin: 4px 4px 4px 4px;
 }
@@ -44,22 +44,22 @@ window#waybar {
 /* ── Module Labels (default) ────────────────────── */
 label.module {
     font-size: 14px;
-    color: #e2e7f3;
+    color: #e5e6f4;
     margin-left: 8px;
     margin-right: 8px;
 }
 
 /* ── Tooltip ────────────────────────────────────── */
 tooltip {
-    background-color: #0e141c;
+    background-color: #10131c;
     border-radius: 12px;
-    border: 1px solid alpha(#9197a1, 0.5);
+    border: 1px solid alpha(#9396a2, 0.5);
     opacity: 0.92;
     padding: 8px;
 }
 
 tooltip label {
-    color: #e2e7f3;
+    color: #e5e6f4;
 }
 
 /* ── Workspaces ─────────────────────────────────── */
@@ -68,7 +68,7 @@ tooltip label {
 }
 
 #workspaces button {
-    color: #9197a1;
+    color: #9396a2;
     border-radius: 8px;
     padding: 0px 6px;
     margin: 0px 2px;
@@ -79,18 +79,18 @@ tooltip label {
 }
 
 #workspaces button.active {
-    background: alpha(#a0c9ff, 0.25);
-    border: 1px solid alpha(#a0c9ff, 0.4);
-    color: #a0c9ff;
+    background: alpha(#b2c5ff, 0.25);
+    border: 1px solid alpha(#b2c5ff, 0.4);
+    color: #b2c5ff;
     border-radius: 10px;
     min-width: 32px;
-    box-shadow: inset 0 1px 2px alpha(#a0c9ff, 0.15);
+    box-shadow: inset 0 1px 2px alpha(#b2c5ff, 0.15);
 }
 
 #workspaces button:hover {
-    background: alpha(#9197a1, 0.25);
+    background: alpha(#9396a2, 0.25);
     border-radius: 10px;
-    color: #e2e7f3;
+    color: #e5e6f4;
 }
 
 #workspaces button.urgent {
@@ -101,7 +101,7 @@ tooltip label {
 
 /* ── Window Title ───────────────────────────────── */
 #window {
-    color: #9197a1;
+    color: #9396a2;
     font-weight: 400;
     padding: 0 10px;
     margin: 0 4px;
@@ -119,18 +119,18 @@ window#waybar.empty #window {
 #custom-appmenu {
     padding: 0 12px;
     margin: 0 4px;
-    color: #a0c9ff;
+    color: #b2c5ff;
     font-size: 18px;
     font-weight: bold;
 }
 
 #custom-appmenu:hover {
-    color: #e2e7f3;
+    color: #e5e6f4;
 }
 
 /* ── Clock ──────────────────────────────────────── */
 #clock {
-    color: #e2e7f3;
+    color: #e5e6f4;
     font-weight: 600;
     padding: 0 10px;
     margin: 0 4px;
@@ -138,16 +138,16 @@ window#waybar.empty #window {
 
 /* ── Battery ────────────────────────────────────── */
 #battery {
-    color: #a7bfe0;
+    color: #acb7d9;
 }
 
 #battery.charging,
 #battery.plugged {
-    color: #c5d6f1;
+    color: #b0b5df;
 }
 
 #battery.warning {
-    color: #c4cff3;
+    color: #bab8e5;
 }
 
 #battery.critical:not(.charging) {
@@ -157,37 +157,37 @@ window#waybar.empty #window {
 
 @keyframes blink {
     to {
-        color: #e2e7f3;
+        color: #e5e6f4;
     }
 }
 
 /* ── Network ────────────────────────────────────── */
 #network {
-    color: #c2c2f9;
+    color: #d0bef6;
 }
 
 #network.disconnected {
-    color: #9197a1;
+    color: #9396a2;
 }
 
 /* ── Bluetooth ──────────────────────────────────── */
 #bluetooth,
 #bluetooth.on,
 #bluetooth.connected {
-    color: #a0c9ff;
+    color: #b2c5ff;
 }
 
 #bluetooth.off {
-    color: #9197a1;
+    color: #9396a2;
 }
 
 /* ── Volume ─────────────────────────────────────── */
 #pulseaudio {
-    color: #a9b6f0;
+    color: #a59ede;
 }
 
 #pulseaudio.muted {
-    color: #9197a1;
+    color: #9396a2;
 }
 
 /* ── Hardware Group / Drawer ────────────────────── */
@@ -196,22 +196,22 @@ window#waybar.empty #window {
 #cpu {
     margin: 0 6px;
     padding: 0 8px;
-    color: #9197a1;
+    color: #9396a2;
 }
 
 #custom-system {
-    color: #c5d6f1;
+    color: #b0b5df;
     margin: 0 6px;
     padding: 0 8px;
 }
 
 /* ── Clipboard ──────────────────────────────────── */
 #custom-clipboard {
-    color: #e2e7f3;
+    color: #e5e6f4;
 }
 
 #custom-clipboard:hover {
-    color: #c2c2f9;
+    color: #d0bef6;
 }
 
 /* ── Tray ───────────────────────────────────────── */
@@ -234,7 +234,7 @@ window#waybar.empty #window {
 }
 
 #custom-power:hover {
-    color: #e2e7f3;
+    color: #e5e6f4;
 }
 
 /* ── Updates (yellow/red badges) ────────────────── */
@@ -242,8 +242,8 @@ window#waybar.empty #window {
     border-radius: 8px;
     margin: 4px 0px 4px 4px;
     padding: 0px 6px;
-    background-color: #a7bfe0;
-    color: #060c14;
+    background-color: #acb7d9;
+    color: #080b14;
 }
 
 #custom-updates.red {
@@ -251,5 +251,5 @@ window#waybar.empty #window {
     margin: 4px 0px 4px 4px;
     padding: 0px 6px;
     background-color: #ffb4ab;
-    color: #060c14;
+    color: #080b14;
 }
