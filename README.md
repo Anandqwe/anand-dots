@@ -16,10 +16,9 @@ Powered by Material You dynamic colors extracted from your wallpaper.
 
 ## Screenshots
 
-> Place screenshots in `assets/screenshots/` and uncomment the lines below.
-
-<!-- ![Desktop](assets/screenshots/desktop.png) -->
-<!-- ![Launcher](assets/screenshots/launcher.png) -->
+![Desktop](assets/screenshots/desktop.png)
+![Launcher](assets/screenshots/launcher.png)
+![Settings GUI](assets/screenshots/settings.png)
 <!-- ![Lock Screen](assets/screenshots/lockscreen.png) -->
 
 ---

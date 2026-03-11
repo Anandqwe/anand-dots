@@ -7,9 +7,9 @@
 font=JetBrainsMono Nerd Font 11
 
 # ── Colors ──────────────────────────────────────
-background-color=#16111bee
-text-color=#eee3f2
-border-color=#ddb8ff
+background-color=#10131cee
+text-color=#e5e6f4
+border-color=#b2c5ff
 
 # ── Layout ──────────────────────────────────────
 width=350
@@ -31,11 +31,11 @@ max-icon-size=48
 
 # ── Urgency: Low ───────────────────────────────
 [urgency=low]
-border-color=#201a24
+border-color=#191c26
 
 # ── Urgency: Normal ────────────────────────────
 [urgency=normal]
-border-color=#ddb8ff
+border-color=#b2c5ff
 
 # ── Urgency: Critical ──────────────────────────
 [urgency=critical]
