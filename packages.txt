@@ -69,6 +69,13 @@ blueman
 jq
 libnotify
 
+# Shell enhancements (zsh)
+fzf
+zoxide
+bat
+fd
+btop
+
 # Settings GUI requirements
 python-gobject
 libadwaita
