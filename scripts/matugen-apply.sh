@@ -40,12 +40,36 @@ success() { echo -e "${CLR_GREEN}[matugen]${CLR_NC} $1"; }
 warn()    { echo -e "${CLR_YELLOW}[matugen]${CLR_NC} $1"; }
 err()     { echo -e "${CLR_RED}[matugen]${CLR_NC} $1" >&2; exit 1; }
 
+protect_generated_files() {
+    command -v git &>/dev/null || return 0
+    git -C "$DOTFILES_DIR" rev-parse --is-inside-work-tree &>/dev/null || return 0
+
+    local generated=(
+        "configs/hypr/theme.conf"
+        "configs/hypr/hyprlock.conf"
+        "configs/waybar/style.css"
+        "configs/rofi/colors.rasi"
+        "configs/mako/config"
+        "configs/kitty/kitty.conf"
+    )
+
+    local rel
+    for rel in "${generated[@]}"; do
+        if git -C "$DOTFILES_DIR" ls-files --error-unmatch "$rel" &>/dev/null; then
+            git -C "$DOTFILES_DIR" update-index --skip-worktree "$rel" &>/dev/null || true
+        fi
+    done
+}
+
 # ── Check dependencies ──────────────────────────
 command -v matugen &>/dev/null || err "matugen not installed. Install: paru -S matugen-bin"
 command -v jq &>/dev/null || err "jq not installed. Install: sudo pacman -S jq"
 
 WALLPAPER="$1"
 [[ -n "$WALLPAPER" && -f "$WALLPAPER" ]] || err "Usage: matugen-apply.sh <wallpaper-path>"
+
+# Runtime-generated files should not appear as git changes in this dotfiles repo.
+protect_generated_files
 
 # ════════════════════════════════════════════════
 #  Color utilities

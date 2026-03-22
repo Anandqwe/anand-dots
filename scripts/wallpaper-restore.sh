@@ -7,6 +7,9 @@
 CACHE_FILE="$HOME/.cache/anand-dots/last-wallpaper"
 WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
 FALLBACK_DIR="$HOME/.config/hypr/wallpapers"
+SCRIPT_REAL="$(realpath "${BASH_SOURCE[0]}")"
+SCRIPTS_DIR="$(dirname "$SCRIPT_REAL")"
+DOTFILES_DIR="$(dirname "$SCRIPTS_DIR")"
 
 mkdir -p "$(dirname "$CACHE_FILE")"
 
@@ -18,6 +21,11 @@ if [[ -f "$CACHE_FILE" ]]; then
             --transition-duration 1 \
             --transition-fps 60
         # Restore symlink for rofi
+        if command -v git &>/dev/null && git -C "$DOTFILES_DIR" rev-parse --is-inside-work-tree &>/dev/null; then
+            if git -C "$DOTFILES_DIR" ls-files --error-unmatch "configs/hypr/current_wallpaper" &>/dev/null; then
+                git -C "$DOTFILES_DIR" update-index --skip-worktree "configs/hypr/current_wallpaper" &>/dev/null || true
+            fi
+        fi
         ln -sf "$WALLPAPER" "$HOME/.config/hypr/current_wallpaper"
         # Re-apply dynamic colors so they match the restored wallpaper
         SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"

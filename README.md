@@ -165,6 +165,8 @@ Example — re-link configs only after updating dotfiles:
 
 All output is logged to `install-logs/install-TIMESTAMP.log`.
 
+> Installer note: runtime-generated theme files (Waybar/Rofi/Kitty/Mako/Hyprlock/theme.conf/current wallpaper pointer) are auto-marked as local `git skip-worktree`, so wallpaper changes do not spam `git status`.
+
 ### After Installation
 
 1. Log out and select **Hyprland** from your display manager, or if already in Hyprland:

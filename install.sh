@@ -379,6 +379,31 @@ verify_packages() {
     fi
 }
 
+protect_runtime_files_in_git() {
+    command -v git &>/dev/null || return
+    git -C "$DOTFILES_DIR" rev-parse --is-inside-work-tree &>/dev/null || return
+
+    local runtime_files=(
+        "configs/hypr/current_wallpaper"
+        "configs/hypr/theme.conf"
+        "configs/hypr/hyprlock.conf"
+        "configs/waybar/style.css"
+        "configs/rofi/colors.rasi"
+        "configs/rofi/wallpaper.rasi"
+        "configs/mako/config"
+        "configs/kitty/kitty.conf"
+    )
+
+    local rel
+    for rel in "${runtime_files[@]}"; do
+        if git -C "$DOTFILES_DIR" ls-files --error-unmatch "$rel" &>/dev/null; then
+            git -C "$DOTFILES_DIR" update-index --skip-worktree "$rel" &>/dev/null || true
+        fi
+    done
+
+    success "Runtime-generated files are protected from git status noise."
+}
+
 # ── Backup Helper ─────────────────────────────
 _backup() {
     local target="$1"
@@ -407,6 +432,10 @@ link_configs() {
         ln -sf "$src" "$dst"
         success "Linked  $cfg"
     done
+
+    if [[ $DRY_RUN -eq 0 ]]; then
+        protect_runtime_files_in_git
+    fi
 }
 
 # ── Link Scripts ──────────────────────────────

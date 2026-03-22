@@ -4,6 +4,10 @@
 # Usage: ./wallpaper.sh [path]
 #   If no path given, picks random from ~/Pictures/Wallpapers/
 
+SCRIPT_REAL="$(realpath "${BASH_SOURCE[0]}")"
+SCRIPTS_DIR="$(dirname "$SCRIPT_REAL")"
+DOTFILES_DIR="$(dirname "$SCRIPTS_DIR")"
+
 WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
 FALLBACK_DIR="$HOME/.config/hypr/wallpapers"
 mkdir -p "$WALLPAPER_DIR"
@@ -35,6 +39,11 @@ mkdir -p "$CACHE_DIR"
 echo "$WALLPAPER" > "$CACHE_DIR/last-wallpaper"
 
 # Keep a symlink for rofi imagebox background
+if command -v git &>/dev/null && git -C "$DOTFILES_DIR" rev-parse --is-inside-work-tree &>/dev/null; then
+    if git -C "$DOTFILES_DIR" ls-files --error-unmatch "configs/hypr/current_wallpaper" &>/dev/null; then
+        git -C "$DOTFILES_DIR" update-index --skip-worktree "configs/hypr/current_wallpaper" &>/dev/null || true
+    fi
+fi
 ln -sf "$WALLPAPER" "$HOME/.config/hypr/current_wallpaper"
 
 # Apply dynamic colors from wallpaper (matugen)
