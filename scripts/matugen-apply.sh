@@ -25,6 +25,10 @@ KITTY_CONF="$HOME/.config/kitty"
 ROFI_CONF="$HOME/.config/rofi"
 MAKO_CONF="$HOME/.config/mako"
 
+# Set to 0 to preserve an existing Waybar style.css during this run.
+# Useful when users want dynamic colors for other components but keep a custom Waybar theme.
+UPDATE_WAYBAR_STYLE="${ANAND_DOTS_UPDATE_WAYBAR_STYLE:-1}"
+
 CLR_GREEN='\033[0;32m'
 CLR_BLUE='\033[0;34m'
 CLR_YELLOW='\033[1;33m'
@@ -259,26 +263,34 @@ hex_saturation() {
 #   Process:
 #     1. Downscale to 150x150 (speed + noise reduction)
 #     2. Quantize to 32 colors (captures variety, avoids dithering noise)
-#     3. Sort by pixel count (most common first)
-#     4. Filter out: near-black (L<0.10), near-white (L>0.90), achromatic (S<0.15)
-#     5. Return top <count> passing colors, one hex per line (no #)
+#     3. Filter out: near-black (L<0.15), near-white (L>0.90), achromatic (S<0.20)
+#     4. Score remaining colors by: pixel_count × saturation × sqrt(lightness)
+#        — this vivid-bias ranking ensures that a bright lantern glow or flame
+#          beats the vast near-black background that dominates dark wallpapers
+#     5. Return top <count> by vivid-bias score, one hex per line (no #)
 #
-#   This gives us the real colors people see in the wallpaper, skipping the
-#   extreme darks and whites that dominate many wallpaper histograms.
+#   Why vivid-bias? Pure pixel-count ranking picks near-black colors on dark
+#   atmospheric wallpapers (night scenes, fire, autumn) because those dark
+#   pixels are far more numerous than the vivid accent colors. The vivid-bias
+#   score rewards saturation and lightness so the seed color is always one that
+#   looks like the wallpaper — not just one that occupies the most pixels.
 extract_dominant_colors() {
     local wall="$1" n="${2:-3}"
     command -v convert &>/dev/null || { echo ""; return; }
+    # Pass "count hex" pairs to awk so we can score by both count and vividness.
     convert "$wall" -resize 150x150\! +dither -colors 32 \
         -format "%c" histogram:info:- 2>/dev/null \
-    | sort -t: -k1 -nr \
-    | sed 's/.*#//; s/[^0-9A-Fa-f].*//; s/^\(......\).*/\1/' \
     | awk -v n="$n" '
         function hb(s, p) {
             return (index("0123456789abcdef",substr(tolower(s),p,1))-1)*16 \
                   + index("0123456789abcdef",substr(tolower(s),p+1,1))-1
         }
         {
-            c=tolower($0)
+            # Extract pixel count (leading integer before the first colon)
+            cnt = $0; sub(/:.*/, "", cnt); cnt = cnt + 0
+            # Extract hex colour (6 chars after the last #)
+            hex = $0; if (!match(hex, /#[0-9A-Fa-f]{6}/)) next
+            c = tolower(substr(hex, RSTART+1, 6))
             if (length(c) != 6) next
             r=hb(c,1)/255; g=hb(c,3)/255; b=hb(c,5)/255
             mx=(r>g&&r>b)?r:(g>b?g:b)
@@ -286,10 +298,29 @@ extract_dominant_colors() {
             d=mx-mn; lv=(mx+mn)/2
             bl=2*lv-1; if(bl<0) bl=-bl
             sat=(d==0)?0:d/(1-bl)
-            # Filter achromatic, near-black, near-white
-            if (sat < 0.15 || lv < 0.10 || lv > 0.90) next
-            print c
-            if (++count >= n) exit
+            # Filter: skip near-black, near-white, and achromatic colors
+            if (sat < 0.20 || lv < 0.15 || lv > 0.90) next
+            # Vivid-bias score: reward saturation and lightness over raw count.
+            # sqrt(lv) dampens the lightness factor so mid-tone accents beat
+            # very pale near-white colors on bright wallpapers.
+            score = cnt * sat * sqrt(lv)
+            scores[NR] = score; hexes[NR] = c; total++
+        }
+        END {
+            # Insertion-sort by descending score (at most 32 entries — negligible cost)
+            for (i = 1; i <= total; i++) {
+                for (j = i+1; j <= total; j++) {
+                    if (scores[j] > scores[i]) {
+                        ts=scores[i]; scores[i]=scores[j]; scores[j]=ts
+                        th=hexes[i];  hexes[i]=hexes[j];   hexes[j]=th
+                    }
+                }
+            }
+            out = 0
+            for (i = 1; i <= total; i++) {
+                print hexes[i]
+                if (++out >= n) break
+            }
         }
     '
 }
@@ -581,6 +612,7 @@ COLORS[maroon]="$error_container"
 
 # ── Text hierarchy ──
 COLORS[text]="$on_surface"
+COLORS[on_surface_variant]="$on_surface_variant"
 COLORS[subtext1]="$on_surface_variant"
 COLORS[subtext0]="$outline"
 
@@ -615,8 +647,12 @@ apply_template() {
 
 THEME_NAME="material-you"
 
-apply_template "$CONFIGS_DIR/waybar/style.css.tpl"   "$WAYBAR_CONF/style.css"   "$THEME_NAME"
-success "  waybar style updated"
+if [[ "$UPDATE_WAYBAR_STYLE" == "1" ]]; then
+    apply_template "$CONFIGS_DIR/waybar/style.css.tpl"   "$WAYBAR_CONF/style.css"   "$THEME_NAME"
+    success "  waybar style updated"
+else
+    info "  waybar style preserved (ANAND_DOTS_UPDATE_WAYBAR_STYLE=0)"
+fi
 
 apply_template "$CONFIGS_DIR/rofi/colors.rasi.tpl"   "$ROFI_CONF/colors.rasi"   "$THEME_NAME"
 success "  rofi colors updated"

@@ -28,7 +28,7 @@ window {
     width:                  860px;
     background-color:       @crust;
     border:                 2px solid;
-    border-color:           @surface1;
+    border-color:           @blue;
     border-radius:          18px;
     location:               center;
     anchor:                 center;

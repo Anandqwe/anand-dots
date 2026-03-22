@@ -1,7 +1,10 @@
 {
   // ── General ───────────────────────────────────
+  "reload_style_on_change": true,
   "layer": "top",
   "position": "top",
+  "fixed-center": true,
+  "height": 34,
   "margin-top": 6,
   "margin-bottom": 0,
   "margin-left": 8,
@@ -53,7 +56,7 @@
     "icon": true,
     "icon-size": 18,
     "format": "{title}",
-    "max-length": 45,
+    "max-length": 55,
     "rewrite": {
       "(.*) — Mozilla Firefox": "$1",
       "(.*) - Chromium": "$1",
@@ -135,7 +138,9 @@
       "󰂁",
       "󰂂",
       "󰁹"
-    ]
+    ],
+    "tooltip": true,
+    "tooltip-format": "{power}W  {timeTo}\nHealth: {health}%"
   },
 
   // ── Bluetooth ─────────────────────────────────
@@ -166,6 +171,7 @@
     "tooltip-format-ethernet": "󰈀 {ifname}\nIP: {ipaddr}",
     "tooltip-format-disconnected": "Disconnected",
     "on-click": "hyprctl dispatch exec '[float] nmgui'",
+    "on-click-right": "hyprctl dispatch exec '[float] nm-connection-editor'",
     "max-length": 50
   },
 
@@ -185,6 +191,7 @@
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": "󰖁 Muted",
+    "tooltip-format": "Volume: {volume}%\\nScroll: adjust\\nLeft: mute\\nRight: open mixer",
     "format-icons": {
       "headphone": "󰋋",
       "headset": "󰋎",
@@ -194,6 +201,7 @@
       "default": ["󰕿", "󰖀", "󰕾"]
     },
     "on-click": "pamixer -t",
+    "on-click-right": "hyprctl dispatch exec '[float] bash ~/.config/hypr/scripts/volume-mixer.sh'",
     "on-scroll-up": "pamixer -i 5",
     "on-scroll-down": "pamixer -d 5"
   },

@@ -371,3 +371,4 @@ eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/zen.toml)"
 # ─────────────────────────────────────────────────────────────
 fastfetch
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+w

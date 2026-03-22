@@ -9,36 +9,38 @@
     font-size: 14px;
     border: none;
     border-radius: 0px;
+    min-height: 0;
 }
 
 window#waybar {
     background: transparent;
+    color: {{text}};
 }
 
 /* ── Floating Pill Containers ───────────────────── */
 
 .modules-left {
-    background-color: alpha({{base}}, 0.85);
+    background-color: alpha({{base}}, 0.82);
     border-radius: 14px;
-    border: 1px solid alpha({{overlay2}}, 0.35);
-    padding: 0px;
-    margin: 4px 4px 4px 4px;
+    border: 1px solid alpha({{overlay2}}, 0.30);
+    padding: 2px 4px;
+    margin: 4px;
 }
 
 .modules-center {
-    background-color: alpha({{base}}, 0.85);
+    background-color: alpha({{base}}, 0.82);
     border-radius: 14px;
-    border: 1px solid alpha({{overlay2}}, 0.35);
-    padding: 0px;
-    margin: 4px 4px 4px 4px;
+    border: 1px solid alpha({{overlay2}}, 0.30);
+    padding: 2px 4px;
+    margin: 4px;
 }
 
 .modules-right {
-    background-color: alpha({{base}}, 0.85);
+    background-color: alpha({{base}}, 0.82);
     border-radius: 14px;
-    border: 1px solid alpha({{overlay2}}, 0.35);
-    padding: 0px;
-    margin: 4px 4px 4px 4px;
+    border: 1px solid alpha({{overlay2}}, 0.30);
+    padding: 2px 4px;
+    margin: 4px;
 }
 
 /* ── Module Labels (default) ────────────────────── */
@@ -70,7 +72,7 @@ tooltip label {
 #workspaces button {
     color: {{subtext0}};
     border-radius: 8px;
-    padding: 0px 6px;
+    padding: 0px 8px;
     margin: 0px 2px;
     min-width: 28px;
     transition: all 0.3s ease-in-out;
@@ -101,7 +103,7 @@ tooltip label {
 
 /* ── Window Title ───────────────────────────────── */
 #window {
-    color: {{overlay2}};
+    color: {{on_surface_variant}};
     font-weight: 400;
     padding: 0 10px;
     margin: 0 4px;
@@ -230,7 +232,7 @@ window#waybar.empty #window {
 /* ── Power ──────────────────────────────────────── */
 #custom-power {
     color: {{red}};
-    padding: 0 12px 0 8px;
+    padding: 0 12px;
 }
 
 #custom-power:hover {

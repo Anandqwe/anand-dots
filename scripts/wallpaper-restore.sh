@@ -22,7 +22,7 @@ if [[ -f "$CACHE_FILE" ]]; then
         # Re-apply dynamic colors so they match the restored wallpaper
         SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
         if [[ -f "$SCRIPT_DIR/matugen-apply.sh" ]] && command -v matugen &>/dev/null; then
-            bash "$SCRIPT_DIR/matugen-apply.sh" "$WALLPAPER" &
+            ANAND_DOTS_UPDATE_WAYBAR_STYLE=0 bash "$SCRIPT_DIR/matugen-apply.sh" "$WALLPAPER" &
         fi
         exit 0
     fi

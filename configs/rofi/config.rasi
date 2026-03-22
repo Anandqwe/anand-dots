@@ -35,7 +35,7 @@ window {
     y-offset:               0px;
     enabled:                true;
     border:                 2px solid;
-    border-color:           @surface1;
+    border-color:           @blue;
     border-radius:          16px;
     cursor:                 "default";
     background-color:       @crust;
