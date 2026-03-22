@@ -10,6 +10,8 @@ BACKUP_SUFFIX=".bak.$(date +%Y%m%d_%H%M%S)"
 LOG_DIR="$DOTFILES_DIR/install-logs"
 LOG="$LOG_DIR/install-$(date +%Y%m%d_%H%M%S).log"
 AUR_HELPER=""   # resolved at runtime
+DRY_RUN=0
+PROFILE=""
 
 # ── Colors ──────────────────────────────────────
 if [[ -t 1 ]]; then
@@ -48,13 +50,14 @@ if [[ ! -f /etc/arch-release ]]; then
 fi
 
 # ── CLI Flags ───────────────────────────────────
-# Usage: install.sh [-p] [-d] [-c] [-s] [-t] [-a]
+# Usage: install.sh [-p] [-d] [-c] [-s] [-t] [-a] [-n] [-P profile]
 #   -p  install packages       -d  create directories
 #   -c  link configs            -s  link scripts
 #   -t  apply theme             -a  all steps (default if no flags)
+#   -n  dry-run (no changes)    -P  preset profile (full|core|rice)
 _do_packages=0 _do_dirs=0 _do_configs=0 _do_scripts=0 _do_theme=0
 
-while getopts "pdcstah" opt; do
+while getopts "pdcstanhP:" opt; do
     case "$opt" in
         p) _do_packages=1 ;;
         d) _do_dirs=1 ;;
@@ -62,23 +65,47 @@ while getopts "pdcstah" opt; do
         s) _do_scripts=1 ;;
         t) _do_theme=1 ;;
         a) _do_packages=1; _do_dirs=1; _do_configs=1; _do_scripts=1; _do_theme=1 ;;
+        n) DRY_RUN=1 ;;
+        P) PROFILE="${OPTARG,,}" ;;
         h)
-            echo "Usage: $0 [-p] [-d] [-c] [-s] [-t] [-a]"
+            echo "Usage: $0 [-p] [-d] [-c] [-s] [-t] [-a] [-n] [-P profile]"
             echo "  -p  Install packages (pacman + AUR)"
             echo "  -d  Create directories and copy wallpapers"
             echo "  -c  Link configuration files"
             echo "  -s  Link scripts and make them executable"
             echo "  -t  Apply Material You colors from wallpaper"
             echo "  -a  All steps (non-interactive)"
+            echo "  -n  Dry-run mode (show actions, perform no writes)"
+            echo "  -P  Preset profile: full | core | rice"
             echo "  (no flags)  Interactive mode — prompts for each step"
             exit 0 ;;
         *) echo "Unknown option. Run '$0 -h' for help." ; exit 1 ;;
     esac
 done
 
+apply_profile() {
+    case "$PROFILE" in
+        "") return 0 ;;
+        full)
+            _do_packages=1; _do_dirs=1; _do_configs=1; _do_scripts=1; _do_theme=1 ;;
+        core)
+            _do_packages=1; _do_dirs=1; _do_configs=1; _do_scripts=1 ;;
+        rice)
+            _do_dirs=1; _do_configs=1; _do_scripts=1; _do_theme=1 ;;
+        *)
+            error "Invalid profile '$PROFILE'. Use one of: full, core, rice." ;;
+    esac
+}
+
+apply_profile
+
 INTERACTIVE=0
 if [[ $(( _do_packages + _do_dirs + _do_configs + _do_scripts + _do_theme )) -eq 0 ]]; then
     INTERACTIVE=1
+fi
+
+if [[ $DRY_RUN -eq 1 ]]; then
+    warn "Dry-run mode enabled: no files or packages will be modified."
 fi
 
 # ── Input Helpers ────────────────────────────────
@@ -104,6 +131,75 @@ ask_step() {
         prompt_yes_no "$prompt"
     else
         [[ "$flag" -eq 1 ]]
+    fi
+}
+
+check_required_files() {
+    local required=(
+        "$DOTFILES_DIR/packages.txt"
+        "$DOTFILES_DIR/configs/hypr"
+        "$DOTFILES_DIR/scripts"
+    )
+
+    local missing=0 item
+    for item in "${required[@]}"; do
+        if [[ ! -e "$item" ]]; then
+            warn "Missing required path: $item"
+            missing=1
+        fi
+    done
+
+    [[ $missing -eq 0 ]] || error "Required files are missing. Re-clone the repo and try again."
+}
+
+wait_for_pacman_lock() {
+    local lock_file="/var/lib/pacman/db.lck"
+    local timeout=60
+    local waited=0
+
+    while [[ -f "$lock_file" ]]; do
+        if (( waited == 0 )); then
+            warn "Pacman lock detected. Waiting for other package operations to finish..."
+        fi
+        sleep 1
+        ((waited++))
+        if (( waited >= timeout )); then
+            error "Pacman lock remained for ${timeout}s. Please finish other package operations and retry."
+        fi
+    done
+
+    (( waited > 0 )) && success "Pacman lock cleared."
+}
+
+preflight_checks() {
+    step "Running preflight checks"
+
+    check_required_files
+
+    local cmds=(bash git pacman sudo find ln)
+    local missing_cmds=()
+    local c
+    for c in "${cmds[@]}"; do
+        command -v "$c" &>/dev/null || missing_cmds+=("$c")
+    done
+
+    if [[ ${#missing_cmds[@]} -gt 0 ]]; then
+        error "Missing required commands: ${missing_cmds[*]}"
+    fi
+
+    wait_for_pacman_lock
+
+    if [[ $DRY_RUN -eq 0 ]]; then
+        info "Validating sudo permissions..."
+        sudo -v || error "Unable to acquire sudo credentials."
+    else
+        info "Dry-run: skipping sudo credential validation."
+    fi
+
+    if ping -c 1 archlinux.org &>/dev/null; then
+        success "Network connectivity looks good."
+    else
+        warn "Could not verify internet connectivity. Package installs may fail."
     fi
 }
 
@@ -138,6 +234,20 @@ apply_colors() {
 # ── Dependency Checks ────────────────────────────
 check_deps() {
     step "Checking dependencies"
+
+    if [[ $DRY_RUN -eq 1 ]]; then
+        info "Dry-run: would verify base-devel and AUR helper (yay/paru)."
+        if command -v yay &>/dev/null; then
+            AUR_HELPER="yay"
+            success "Dry-run detected AUR helper: yay"
+        elif command -v paru &>/dev/null; then
+            AUR_HELPER="paru"
+            success "Dry-run detected AUR helper: paru"
+        else
+            warn "Dry-run: no AUR helper found. Would prompt to install yay/paru."
+        fi
+        return
+    fi
 
     # Ensure base-devel is present
     if ! pacman -Q base-devel &>/dev/null; then
@@ -182,6 +292,10 @@ check_deps() {
 
 _install_aur_helper() {
     local helper="$1"
+    if [[ $DRY_RUN -eq 1 ]]; then
+        info "Dry-run: would clone/build AUR helper '$helper'."
+        return
+    fi
     info "Cloning and building $helper..."
     local tmp
     tmp=$(mktemp -d)
@@ -216,6 +330,13 @@ _parse_packages() {
 install_packages() {
     step "Installing packages"
     _parse_packages
+
+    if [[ $DRY_RUN -eq 1 ]]; then
+        info "Dry-run: package installation plan"
+        [[ ${#_PACMAN_PKGS[@]} -gt 0 ]] && info "Pacman (${#_PACMAN_PKGS[@]}): ${_PACMAN_PKGS[*]}"
+        [[ ${#_AUR_PKGS[@]} -gt 0 ]] && info "AUR (${#_AUR_PKGS[@]}): ${_AUR_PKGS[*]}"
+        return
+    fi
 
     if [[ ${#_PACMAN_PKGS[@]} -gt 0 ]]; then
         info "Installing ${#_PACMAN_PKGS[@]} pacman packages..."
@@ -278,6 +399,10 @@ link_configs() {
         local src="$DOTFILES_DIR/configs/$cfg"
         local dst="$CONFIG_DIR/$cfg"
         [[ ! -d "$src" ]] && { warn "Source missing: $src — skipping."; continue; }
+        if [[ $DRY_RUN -eq 1 ]]; then
+            info "Dry-run: would link $dst -> $src"
+            continue
+        fi
         _backup "$dst"
         ln -sf "$src" "$dst"
         success "Linked  $cfg"
@@ -288,6 +413,12 @@ link_configs() {
 link_scripts() {
     step "Setting up scripts"
     local dst="$CONFIG_DIR/hypr/scripts"
+
+    if [[ $DRY_RUN -eq 1 ]]; then
+        info "Dry-run: would link $dst -> $DOTFILES_DIR/scripts"
+        info "Dry-run: would chmod +x scripts/*.sh and settings/main.py"
+        return
+    fi
 
     _backup "$dst"
     ln -sf "$DOTFILES_DIR/scripts" "$dst"
@@ -301,8 +432,17 @@ create_directories() {
     step "Creating directories"
     local dirs=("$HOME/Pictures/Screenshots" "$HOME/Pictures/Wallpapers" "$HOME/.cache/anand-dots")
     for d in "${dirs[@]}"; do
+        if [[ $DRY_RUN -eq 1 ]]; then
+            info "Dry-run: would ensure $d"
+            continue
+        fi
         mkdir -p "$d" && success "Ensured $d"
     done
+
+    if [[ $DRY_RUN -eq 1 ]]; then
+        info "Dry-run: would copy bundled wallpapers into ~/Pictures/Wallpapers"
+        return
+    fi
 
     local bundled="$DOTFILES_DIR/assets/wallpapers"
     if [[ -d "$bundled" ]]; then
@@ -316,6 +456,11 @@ create_directories() {
 enable_services() {
     step "Enabling system services"
     local services=(bluetooth)   # add more if needed e.g. sddm
+
+    if [[ $DRY_RUN -eq 1 ]]; then
+        info "Dry-run: would enable services: ${services[*]}"
+        return
+    fi
 
     for svc in "${services[@]}"; do
         if systemctl list-unit-files "${svc}.service" &>/dev/null; then
@@ -356,6 +501,11 @@ print_summary() {
 
 # ── Reboot Prompt ─────────────────────────────
 prompt_reboot() {
+    if [[ $DRY_RUN -eq 1 ]]; then
+        info "Dry-run: skipping reboot prompt."
+        return
+    fi
+
     echo ""
     if prompt_yes_no "Reboot now to apply all changes?" "n"; then
         info "Rebooting..."
@@ -378,7 +528,15 @@ main() {
     echo -e "  Log: ${CYAN}$LOG${NC}"
     echo ""
 
+    if [[ -n "$PROFILE" ]]; then
+        info "Using profile: $PROFILE"
+    fi
+    if [[ $DRY_RUN -eq 1 ]]; then
+        warn "Dry-run mode is active."
+    fi
+
     # ── Pre-flight ──────────────────────────
+    preflight_checks
     check_deps
 
     echo ""
@@ -439,7 +597,11 @@ main() {
     echo ""
 
     # ── Verify ──────────────────────────────
-    verify_packages
+    if [[ $DRY_RUN -eq 0 ]]; then
+        verify_packages
+    else
+        info "Dry-run: skipping package verification."
+    fi
 
     # ── Done ────────────────────────────────
     print_summary

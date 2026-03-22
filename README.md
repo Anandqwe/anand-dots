@@ -106,6 +106,26 @@ Run all steps without prompts:
 ./install.sh -a
 ```
 
+### Safe Dry-run (recommended first)
+
+Preview everything the installer would do without changing your system:
+
+```bash
+./install.sh -a -n
+```
+
+This validates prerequisites, checks required files, and prints the full action plan.
+
+### Preset Profiles
+
+Use curated install profiles inspired by large Hyprland installers:
+
+```bash
+./install.sh -P full   # packages + dirs + configs + scripts + theme
+./install.sh -P core   # packages + dirs + configs + scripts
+./install.sh -P rice   # dirs + configs + scripts + theme
+```
+
 ### Selective Install
 
 You can run individual steps with flags:
@@ -119,6 +139,8 @@ You can run individual steps with flags:
   -s   Symlink scripts and make them executable
   -t   Apply Material You colors from wallpaper
   -a   All steps (non-interactive)
+  -n   Dry-run mode (no writes, no package changes)
+  -P   Preset profile: full | core | rice
   -h   Show help
 ```
 
@@ -131,14 +153,15 @@ Example — re-link configs only after updating dotfiles:
 
 | Step | What happens |
 |------|-------------|
-| **1. Dependencies** | Checks `base-devel`; detects or installs `yay`/`paru`; warns about NVIDIA |
-| **2. Packages** | Installs all packages from `packages.txt` via pacman + AUR helper |
-| **3. Directories** | Creates `~/Pictures/Screenshots`, `~/Pictures/Wallpapers`, `~/.cache/anand-dots`; copies bundled wallpapers |
-| **4. Configs** | Backs up any existing configs as `*.bak.TIMESTAMP`, then symlinks dotfile configs to `~/.config/` |
-| **5. Scripts** | Symlinks `scripts/` to `~/.config/hypr/scripts/`; makes all `.sh` files and `settings/main.py` executable |
-| **6. Colors** | Runs `matugen-apply.sh` on the first available wallpaper to generate an initial theme |
-| **7. Services** | Enables bluetooth systemd service |
-| **8. Summary** | Prints starter keybinds and next steps |
+| **1. Preflight** | Validates required files/commands, waits for pacman lock, verifies sudo access, checks network |
+| **2. Dependencies** | Checks `base-devel`; detects or installs `yay`/`paru`; warns about NVIDIA |
+| **3. Packages** | Installs all packages from `packages.txt` via pacman + AUR helper |
+| **4. Directories** | Creates `~/Pictures/Screenshots`, `~/Pictures/Wallpapers`, `~/.cache/anand-dots`; copies bundled wallpapers |
+| **5. Configs** | Backs up any existing configs as `*.bak.TIMESTAMP`, then symlinks dotfile configs to `~/.config/` |
+| **6. Scripts** | Symlinks `scripts/` to `~/.config/hypr/scripts/`; makes all `.sh` files and `settings/main.py` executable |
+| **7. Colors** | Runs `matugen-apply.sh` on the first available wallpaper to generate an initial theme |
+| **8. Services** | Enables bluetooth systemd service |
+| **9. Summary** | Prints starter keybinds and next steps |
 
 All output is logged to `install-logs/install-TIMESTAMP.log`.
 

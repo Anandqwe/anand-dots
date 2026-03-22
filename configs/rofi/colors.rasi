@@ -5,30 +5,30 @@
 
 * {
     /* ── Base surfaces ──────────────────── */
-    base:           #101417;
-    mantle:         #101417;
-    crust:          #090c10;
+    base:           #191211;
+    mantle:         #191211;
+    crust:          #110a09;
 
     /* ── Overlay surfaces ───────────────── */
-    surface0:       #191d20;
-    surface1:       #202327;
-    surface2:       #2a2e32;
+    surface0:       #221b1a;
+    surface1:       #292120;
+    surface2:       #342b2b;
 
     /* ── Text ───────────────────────────── */
-    text:           #e5e7ec;
-    subtext1:       #c0c7d1;
-    subtext0:       #9097a0;
-    overlay2:       #9097a0;
+    text:           #f3e3e2;
+    subtext1:       #d9c1bf;
+    subtext0:       #a7918f;
+    overlay2:       #a7918f;
 
     /* ── Accent colors ──────────────────── */
-    blue:           #97cbff;
-    sky:            #abc9e9;
-    teal:           #fcbb54;
-    mauve:          #e1b167;
-    lavender:       #83b5e6;
-    green:          #a7ccf0;
-    yellow:         #b8d9fa;
-    peach:          #e8ccac;
+    blue:           #ffb3ad;
+    sky:            #edbab6;
+    teal:           #a0cee6;
+    mauve:          #92acc1;
+    lavender:       #d89590;
+    green:          #e6b0ab;
+    yellow:         #e1afab;
+    peach:          #aec1d3;
     red:            #ffb4ab;
 
     /* ── Transparency helpers ───────────── */
