@@ -27,8 +27,18 @@ if [[ -z "$WALLPAPER" || ! -f "$WALLPAPER" ]]; then
     exit 1
 fi
 
+# Support both legacy swww and renamed awww binaries.
+if command -v swww &>/dev/null; then
+    WALL_BIN="swww"
+elif command -v awww &>/dev/null; then
+    WALL_BIN="awww"
+else
+    echo "Wallpaper backend not found. Install swww or awww."
+    exit 1
+fi
+
 # Apply wallpaper with transition
-swww img "$WALLPAPER" \
+"$WALL_BIN" img "$WALLPAPER" \
     --transition-type grow \
     --transition-duration 1 \
     --transition-fps 60

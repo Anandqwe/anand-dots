@@ -13,10 +13,20 @@ DOTFILES_DIR="$(dirname "$SCRIPTS_DIR")"
 
 mkdir -p "$(dirname "$CACHE_FILE")"
 
+# Support both legacy swww and renamed awww binaries.
+if command -v swww &>/dev/null; then
+    WALL_BIN="swww"
+elif command -v awww &>/dev/null; then
+    WALL_BIN="awww"
+else
+    echo "Wallpaper backend not found. Install swww or awww."
+    exit 1
+fi
+
 if [[ -f "$CACHE_FILE" ]]; then
     WALLPAPER=$(cat "$CACHE_FILE")
     if [[ -f "$WALLPAPER" ]]; then
-        swww img "$WALLPAPER" \
+        "$WALL_BIN" img "$WALLPAPER" \
             --transition-type grow \
             --transition-duration 1 \
             --transition-fps 60
@@ -37,4 +47,4 @@ if [[ -f "$CACHE_FILE" ]]; then
 fi
 
 # No cache or file missing — pick random
-~/.config/hypr/scripts/wallpaper.sh
+bash "$SCRIPTS_DIR/wallpaper.sh"
